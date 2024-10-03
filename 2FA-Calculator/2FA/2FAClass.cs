@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _2FA_Calculator._2FA
 {
-    internal class _2FAClass
+    class _2FAClass
     {
     }
 }
