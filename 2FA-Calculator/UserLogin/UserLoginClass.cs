@@ -49,6 +49,28 @@ namespace _2FA_Calculator.UserLogin
             return this.inputtedPassword;
         }
 
+        public bool isCorrect()
+        {
+            string UserLoginStorage = "UserLoginStorage.txt";
+            string? line = string.Empty;
+
+            using (StreamReader sr = new StreamReader(UserLoginStorage))
+            {
+                while((line = sr.ReadLine()) != null)
+                {
+                    string[] tokens = line.Split(',');
+
+                    if (tokens[0].CompareTo(tokens[1]) == 0)
+                    {
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private void RequestUsername()
         {
             Console.Write("Input username: ");
