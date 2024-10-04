@@ -51,10 +51,10 @@ namespace _2FA_Calculator.UserLogin
 
         public bool isCorrect()
         {
-            string UserLoginStorage = "UserLoginStorage.txt";
+            string userLoginStorage = "UserLoginStorage.txt";
             string? line = string.Empty;
 
-            using (StreamReader sr = new StreamReader(UserLoginStorage))
+            using (StreamReader sr = new StreamReader(userLoginStorage))
             {
                 while((line = sr.ReadLine()) != null)
                 {
@@ -69,6 +69,17 @@ namespace _2FA_Calculator.UserLogin
             }
 
             return false;
+        }
+
+        public void createAccount(string username, string password)
+        {
+            string userLoginStorage = "UserLoginStorage.txt";
+
+            using (StreamWriter sw = new StreamWriter(userLoginStorage, true))
+            {
+                string line = username + "," + password;
+                sw.WriteLine(line);
+            }
         }
 
         private void RequestUsername()
