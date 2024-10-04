@@ -89,7 +89,57 @@ namespace _2FA_Calculator.UserLogin
         // Put this in a different file so that we can salt it.
         public void createAccount()
         {
+            this.inputtedUsername = requestInputFromUserAndConfirm("username");
+            this.inputtedPassword = requestInputFromUserAndConfirm("password");
+
+            // Go through server to create account
             this.userAuth.createAccount(this.inputtedUsername, this.inputtedPassword);
+        }
+
+        private string requestInputFromUserAndConfirm(string nameOfInput)
+        {
+            bool userIsSatisfied = false;
+            string? userInput = null;
+
+            while (!userIsSatisfied || userInput == null || userInput == string.Empty)
+            {
+                while (userInput == null || userInput == string.Empty)
+                {
+                    Console.Write("Enter your desired " + nameOfInput + ": ");
+                    userInput = Console.ReadLine();
+
+                    // Check if username already exists ********************************************************
+                    if (userInput == null || userInput == string.Empty)
+                    {
+                        Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
+                    }
+                }
+
+                do
+                {
+                    Console.WriteLine("Is \"" + userInput + "\" correct?");
+                } while (!(userIsSatisfied = assessYesNoInput(Console.ReadLine())));
+
+                Console.Clear();
+            }
+
+            return userInput;
+        }
+
+        private bool assessYesNoInput(string? input)
+        {
+            if (input != null)
+            {
+                if (input.Length == 1)
+                {
+                    if (input.CompareTo("y") == 0 || input.CompareTo("Y") == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

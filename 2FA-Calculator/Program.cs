@@ -27,7 +27,6 @@ if (userInput != null)
             }
             break;
         case '2':
-            userLogin.requestUserAndPass();
             userLogin.createAccount();
             break;
     }
