@@ -8,12 +8,12 @@ using System.Security.Cryptography;
 
 namespace _2FA_Calculator.UserLogin
 {
-    class UserAuthenticationClass
+    class UserAuthenticator
     {
-        public UserAuthenticationClass() { }
+        public UserAuthenticator() { }
 
         // Put this in a different file and add security.
-        public bool UserCredentialsAuthentication(string username, string password)
+        public bool userCredentialsAuthentication(string username, string password)
         {
             string userLoginStorage = "UserLoginStorage.txt";
             string? line = string.Empty;
@@ -24,7 +24,7 @@ namespace _2FA_Calculator.UserLogin
                 {
                     string[] tokens = line.Split(',');
 
-                    string saltedPasswordHash = ComputeSha256Hash(password + tokens[2]);
+                    string saltedPasswordHash = computeSha256Hash(password + tokens[2]);
                     if (tokens[0].CompareTo(username) == 0 && tokens[1].CompareTo(saltedPasswordHash) == 0)
                     {
                         return true;
@@ -43,16 +43,16 @@ namespace _2FA_Calculator.UserLogin
             using (StreamWriter sw = new StreamWriter(userLoginStorage, true))
             {
                 int saltLength = 8;
-                string salt = GenerateSalt(saltLength);
+                string salt = generateSalt(saltLength);
 
-                string hashedPassword = ComputeSha256Hash(password + salt);
+                string hashedPassword = computeSha256Hash(password + salt);
 
                 string line = username + "," + hashedPassword + "," + salt;
                 sw.WriteLine(line);
             }
         }
 
-        private string GenerateSalt(int length)
+        private string generateSalt(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
@@ -66,7 +66,7 @@ namespace _2FA_Calculator.UserLogin
             return result.ToString();
         }
 
-        private string ComputeSha256Hash(string rawData)
+        private string computeSha256Hash(string rawData)
         {
             // Create a SHA256 object
             using (SHA256 sha256Hash = SHA256.Create())

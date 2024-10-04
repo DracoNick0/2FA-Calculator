@@ -1,6 +1,6 @@
 ﻿using _2FA_Calculator.UserLogin;
 
-UserAuthenticationClass userLogin = new UserAuthenticationClass();
+UserAuthenticator userLogin = new UserAuthenticator();
 userLogin.RequestUserAndPass();
 Console.WriteLine("Username: " + userLogin.getUsername());
 Console.WriteLine("Password: " + userLogin.getPassword());

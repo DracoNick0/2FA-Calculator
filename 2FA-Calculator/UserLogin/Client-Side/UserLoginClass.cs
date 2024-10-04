@@ -18,7 +18,7 @@ namespace _2FA_Calculator.UserLogin
             inputtedPassword = string.Empty;
         }
 
-        public void RequestUserAndPass()
+        public void requestUserAndPass()
         {
             Console.Write("Input username,password: ");
 
@@ -34,7 +34,7 @@ namespace _2FA_Calculator.UserLogin
                 }
                 else
                 {
-                    RequestUserAndPass();
+                    requestUserAndPass();
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace _2FA_Calculator.UserLogin
             return this.inputtedPassword;
         }
 
-        private void RequestUsername()
+        private void requestUsername()
         {
             Console.Write("Input username: ");
 
@@ -60,11 +60,11 @@ namespace _2FA_Calculator.UserLogin
             }
             else
             {
-                RequestUsername();
+                requestUsername();
             }
         }
 
-        private void RequestPassword()
+        private void requestPassword()
         {
             Console.Write("Input password: ");
 
@@ -75,12 +75,13 @@ namespace _2FA_Calculator.UserLogin
             }
             else
             {
-                RequestPassword();
+                requestPassword();
             }
         }
         
-        public bool isCorrect()
+        public bool authenticateUser()
         {
+            UserAuthenticationClass
             return false;
         }
 
