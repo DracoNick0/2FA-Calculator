@@ -9,13 +9,15 @@ namespace _2FA_Calculator.UserLogin
 {
     class UserLoginClass
     {
+        UserAuthenticator userAuth;
         private string inputtedUsername;
         private string inputtedPassword;
 
         public UserLoginClass()
         {
-            inputtedUsername = string.Empty;
-            inputtedPassword = string.Empty;
+            this.userAuth = new UserAuthenticator();
+            this.inputtedUsername = string.Empty;
+            this.inputtedPassword = string.Empty;
         }
 
         public void requestUserAndPass()
@@ -81,14 +83,13 @@ namespace _2FA_Calculator.UserLogin
         
         public bool authenticateUser()
         {
-            UserAuthenticationClass
-            return false;
+            return this.userAuth.authenticateUser(this.inputtedUsername, this.inputtedPassword);
         }
 
         // Put this in a different file so that we can salt it.
         public void createAccount(string username, string password)
         {
-
+            this.userAuth.createAccount(this.inputtedUsername, this.inputtedPassword);
         }
     }
 }

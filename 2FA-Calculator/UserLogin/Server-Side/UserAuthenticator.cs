@@ -13,7 +13,7 @@ namespace _2FA_Calculator.UserLogin
         public UserAuthenticator() { }
 
         // Put this in a different file and add security.
-        public bool userCredentialsAuthentication(string username, string password)
+        public bool authenticateUser(string username, string password)
         {
             string userLoginStorage = "UserLoginStorage.txt";
             string? line = string.Empty;
