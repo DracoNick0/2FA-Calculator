@@ -29,7 +29,8 @@ namespace _2FA_Calculator.UserLogin
                 {
                     string[] tokens = line.Split(',');
 
-                    if (tokens[0].CompareTo(username) == 0 && tokens[1].CompareTo(password) == 0)
+                    string saltedPasswordHash = ComputeSha256Hash(password + tokens[2]);
+                    if (tokens[0].CompareTo(username) == 0 && tokens[1].CompareTo(saltedPasswordHash) == 0)
                     {
                         return true;
                     }
