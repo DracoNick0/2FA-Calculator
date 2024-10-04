@@ -87,7 +87,7 @@ namespace _2FA_Calculator.UserLogin
         }
 
         // Put this in a different file so that we can salt it.
-        public void createAccount(string username, string password)
+        public void createAccount()
         {
             this.userAuth.createAccount(this.inputtedUsername, this.inputtedPassword);
         }
