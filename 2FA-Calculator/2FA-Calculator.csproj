@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="2FA\Client-Side\" />
+    <Folder Include="2FA\Server-Side\" />
+  </ItemGroup>
+
 </Project>

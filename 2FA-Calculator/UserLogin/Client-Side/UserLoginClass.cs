@@ -26,8 +26,8 @@ namespace _2FA_Calculator.UserLogin
             if ((userInput = Console.ReadLine()) != null)
             {
                 string[] tokens = userInput.Split(',');
-                
-                if(tokens.Length == 2)
+
+                if (tokens.Length == 2)
                 {
                     this.inputtedUsername = tokens[0];
                     this.inputtedPassword = tokens[1];
@@ -49,45 +49,12 @@ namespace _2FA_Calculator.UserLogin
             return this.inputtedPassword;
         }
 
-        public bool isCorrect()
-        {
-            string userLoginStorage = "UserLoginStorage.txt";
-            string? line = string.Empty;
-
-            using (StreamReader sr = new StreamReader(userLoginStorage))
-            {
-                while((line = sr.ReadLine()) != null)
-                {
-                    string[] tokens = line.Split(',');
-
-                    if (tokens[0].CompareTo(tokens[1]) == 0)
-                    {
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public void createAccount(string username, string password)
-        {
-            string userLoginStorage = "UserLoginStorage.txt";
-
-            using (StreamWriter sw = new StreamWriter(userLoginStorage, true))
-            {
-                string line = username + "," + password;
-                sw.WriteLine(line);
-            }
-        }
-
         private void RequestUsername()
         {
             Console.Write("Input username: ");
 
             string? userInput = null;
-            if((userInput = Console.ReadLine()) != null)
+            if ((userInput = Console.ReadLine()) != null)
             {
                 this.inputtedUsername = userInput;
             }
@@ -110,6 +77,17 @@ namespace _2FA_Calculator.UserLogin
             {
                 RequestPassword();
             }
+        }
+        
+        public bool isCorrect()
+        {
+            return false;
+        }
+
+        // Put this in a different file so that we can salt it.
+        public void createAccount(string username, string password)
+        {
+
         }
     }
 }
