@@ -17,7 +17,7 @@ namespace _2FA_Calculator.UserLogin
         }
 
         // Put this in a different file and add security.
-        public bool isCorrect()
+        public bool isCorrect(string username, string password)
         {
             string userLoginStorage = "UserLoginStorage.txt";
             string? line = string.Empty;
@@ -28,9 +28,8 @@ namespace _2FA_Calculator.UserLogin
                 {
                     string[] tokens = line.Split(',');
 
-                    if (tokens[0].CompareTo(tokens[1]) == 0)
+                    if (tokens[0].CompareTo(username) == 0 && tokens[1].CompareTo(password) == 0)
                     {
-
                         return true;
                     }
                 }
