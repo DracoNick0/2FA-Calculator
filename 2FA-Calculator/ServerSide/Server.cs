@@ -1,11 +1,11 @@
 ﻿namespace _2FA_Calculator.ServerSide
 {
-    class TheServer
+    class Server
     {
         UserAuthenticator userAuthenticator;
         UserManager userManager;
 
-        public TheServer()
+        public Server()
         {
             this.userAuthenticator = new UserAuthenticator(@"../../../ServerSide/UserCredentialsStorage.txt");
             this.userManager = new UserManager(@"../../../ServerSide/UserCredentialsStorage.txt");

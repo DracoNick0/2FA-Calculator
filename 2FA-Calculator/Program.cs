@@ -7,7 +7,7 @@ Console.WriteLine("  2. Create new account");
 string? userInput = Console.ReadLine();
 if (userInput != null)
 {
-    UserLoginClass userLogin = new UserLoginClass();
+    LoginInterface userLogin = new LoginInterface();
 
     switch (userInput[0])
     {

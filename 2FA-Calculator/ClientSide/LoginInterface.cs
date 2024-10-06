@@ -2,15 +2,15 @@
 
 namespace _2FA_Calculator.ClientSide
 {
-    class UserLoginClass
+    class LoginInterface
     {
-        private TheServer server;
+        private Server server;
         private string inputtedUsername;
         private string inputtedPassword;
 
-        public UserLoginClass()
+        public LoginInterface()
         {
-            this.server = new TheServer();
+            this.server = new Server();
             this.inputtedUsername = string.Empty;
             this.inputtedPassword = string.Empty;
         }
