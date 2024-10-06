@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Security.Cryptography;
 
-namespace _2FA_Calculator.UserLogin.ServerSide
+namespace _2FA_Calculator.Server
 {
     class Hasher
     {

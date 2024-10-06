@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2FA_Calculator.Calculator
+namespace _2FA_Calculator.Client
 {
-    class CalculatorClass
+    class _2FAClass
     {
     }
 }

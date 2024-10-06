@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text;
-using System.IO;
+﻿using System.Text;
 
-namespace _2FA_Calculator.UserLogin.ServerSide
+namespace _2FA_Calculator.Server
 {
     class UserManager
     {
@@ -11,15 +9,15 @@ namespace _2FA_Calculator.UserLogin.ServerSide
 
         public UserManager()
         {
-            this.userStorageFilePath = @"../../../UserLogin/Server-Side/UserCredentialsStorage.txt";
-            this.hasher = new Hasher();
-        } 
+            userStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
+            hasher = new Hasher();
+        }
 
         public bool createAccount(string username, string password)
         {
             if (!userExists(username))
             {
-                string userStorageFilePath = @"../../../UserLogin/Server-Side/UserCredentialsStorage.txt";
+                string userStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
 
                 int saltLength = 8;
                 string salt = generateSalt(saltLength);
@@ -42,7 +40,7 @@ namespace _2FA_Calculator.UserLogin.ServerSide
         }
 
         private bool userExists(string username)
-		{
+        {
             string? line = string.Empty;
 
             // Read through the user storage
@@ -60,8 +58,8 @@ namespace _2FA_Calculator.UserLogin.ServerSide
                 }
             }
 
-            return false; 
-		}
+            return false;
+        }
 
         private string generateSalt(int length)
         {

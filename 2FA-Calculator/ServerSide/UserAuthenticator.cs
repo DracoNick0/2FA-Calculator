@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace _2FA_Calculator.UserLogin.ServerSide
+﻿namespace _2FA_Calculator.Server
 {
     class UserAuthenticator
     {
@@ -13,13 +7,13 @@ namespace _2FA_Calculator.UserLogin.ServerSide
         // Put this in a different file and add security.
         public bool authenticateUser(string username, string password)
         {
-            string filePath = @"../../../UserLogin/Server-Side/UserCredentialsStorage.txt";
+            string filePath = @"../../../ServerSide/UserCredentialsStorage.txt";
             string? line = string.Empty;
             Hasher hasher = new Hasher();
 
             using (StreamReader sr = new StreamReader(filePath))
             {
-                while((line = sr.ReadLine()) != null)
+                while ((line = sr.ReadLine()) != null)
                 {
                     string[] tokens = line.Split(',');
 

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using _2FA_Calculator.UserLogin.ServerSide;
+using _2FA_Calculator.Server;
 
-namespace _2FA_Calculator.UserLogin.ClientSide
+namespace _2FA_Calculator.Client
 {
     class UserLoginClass
     {
@@ -17,20 +12,20 @@ namespace _2FA_Calculator.UserLogin.ClientSide
 
         public UserLoginClass()
         {
-            this.userAuth = new UserAuthenticator();
-            this.userManager = new UserManager();
-            this.inputtedUsername = string.Empty;
-            this.inputtedPassword = string.Empty;
+            userAuth = new UserAuthenticator();
+            userManager = new UserManager();
+            inputtedUsername = string.Empty;
+            inputtedPassword = string.Empty;
         }
 
         public string getUsername()
         {
-            return this.inputtedUsername;
+            return inputtedUsername;
         }
 
         public string getPassword()
         {
-            return this.inputtedPassword;
+            return inputtedPassword;
         }
 
         public void requestUserAndPass()
@@ -44,8 +39,8 @@ namespace _2FA_Calculator.UserLogin.ClientSide
 
                 if (tokens.Length == 2)
                 {
-                    this.inputtedUsername = tokens[0];
-                    this.inputtedPassword = tokens[1];
+                    inputtedUsername = tokens[0];
+                    inputtedPassword = tokens[1];
                 }
                 else
                 {
@@ -58,16 +53,16 @@ namespace _2FA_Calculator.UserLogin.ClientSide
         // Put this in a different file so that we can salt it.
         public void createAccount()
         {
-            this.inputtedUsername = requestInputFromUserAndConfirm("username");
-            this.inputtedPassword = requestInputFromUserAndConfirm("password");
+            inputtedUsername = requestInputFromUserAndConfirm("username");
+            inputtedPassword = requestInputFromUserAndConfirm("password");
 
             // Go through server to create account
-            this.userManager.createAccount(this.inputtedUsername, this.inputtedPassword);
+            userManager.createAccount(inputtedUsername, inputtedPassword);
         }
 
         public bool authenticateUser()
         {
-            return this.userAuth.authenticateUser(this.inputtedUsername, this.inputtedPassword);
+            return userAuth.authenticateUser(inputtedUsername, inputtedPassword);
         }
 
         private string requestInputFromUserAndConfirm(string nameOfInput)
@@ -105,7 +100,7 @@ namespace _2FA_Calculator.UserLogin.ClientSide
             string? userInput = null;
             if ((userInput = Console.ReadLine()) != null)
             {
-                this.inputtedUsername = userInput;
+                inputtedUsername = userInput;
             }
             else
             {
@@ -120,7 +115,7 @@ namespace _2FA_Calculator.UserLogin.ClientSide
             string? userInput = null;
             if ((userInput = Console.ReadLine()) != null)
             {
-                this.inputtedPassword = userInput;
+                inputtedPassword = userInput;
             }
             else
             {

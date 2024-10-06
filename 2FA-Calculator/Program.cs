@@ -1,4 +1,4 @@
-﻿using _2FA_Calculator.UserLogin.ClientSide;
+﻿using _2FA_Calculator.Client;
 
 Console.WriteLine("Please input number corresponding to option: ");
 Console.WriteLine("  1. Login");
