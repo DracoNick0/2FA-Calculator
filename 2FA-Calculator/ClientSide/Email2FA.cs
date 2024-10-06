@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _2FA_Calculator.Client
+﻿namespace _2FA_Calculator.ClientSide
 {
-    class _2FAClass
+    class Email2FA
     {
     }
 }
