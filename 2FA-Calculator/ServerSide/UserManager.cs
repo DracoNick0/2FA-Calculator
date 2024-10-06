@@ -5,25 +5,23 @@ namespace _2FA_Calculator.Server
     class UserManager
     {
         private Hasher hasher;
-        private string userStorageFilePath;
+        private string storageFilePath;
 
-        public UserManager()
+        public UserManager(string storageFilePath)
         {
-            userStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
-            hasher = new Hasher();
+            this.storageFilePath = storageFilePath;
+            this.hasher = new Hasher();
         }
 
         public bool createAccount(string username, string password)
         {
             if (!userExists(username))
             {
-                string userStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
-
                 int saltLength = 8;
                 string salt = generateSalt(saltLength);
                 string hashedPassword = hasher.computeSha256Hash(password + salt);
 
-                using (StreamWriter sw = new StreamWriter(userStorageFilePath, true))
+                using (StreamWriter sw = new StreamWriter(storageFilePath, true))
                 {
 
                     string line = username + "," + hashedPassword + "," + salt;
@@ -44,7 +42,7 @@ namespace _2FA_Calculator.Server
             string? line = string.Empty;
 
             // Read through the user storage
-            using (StreamReader sr = new StreamReader(userStorageFilePath))
+            using (StreamReader sr = new StreamReader(storageFilePath))
             {
                 while ((line = sr.ReadLine()) != null)
                 {

@@ -2,16 +2,19 @@
 {
     class UserAuthenticator
     {
-        public UserAuthenticator() { }
+        string storageFilePath;
+        public UserAuthenticator(string storageFilePath)
+        {
+            this.storageFilePath = storageFilePath;
+        }
 
         // Put this in a different file and add security.
         public bool authenticateUser(string username, string password)
         {
-            string filePath = @"../../../ServerSide/UserCredentialsStorage.txt";
             string? line = string.Empty;
             Hasher hasher = new Hasher();
 
-            using (StreamReader sr = new StreamReader(filePath))
+            using (StreamReader sr = new StreamReader(storageFilePath))
             {
                 while ((line = sr.ReadLine()) != null)
                 {

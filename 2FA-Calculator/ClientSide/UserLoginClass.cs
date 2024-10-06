@@ -12,8 +12,8 @@ namespace _2FA_Calculator.Client
 
         public UserLoginClass()
         {
-            userAuth = new UserAuthenticator();
-            userManager = new UserManager();
+            userAuth = new UserAuthenticator(@"../../../ServerSide/UserCredentialsStorage.txt");
+            userManager = new UserManager(@"../../../ServerSide/UserCredentialsStorage.txt");
             inputtedUsername = string.Empty;
             inputtedPassword = string.Empty;
         }
