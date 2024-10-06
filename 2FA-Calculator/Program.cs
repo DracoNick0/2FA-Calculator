@@ -17,7 +17,16 @@ if (userInput != null)
             {
                 Console.WriteLine("Username: " + userLogin.getUsername());
                 Console.WriteLine("Password: " + userLogin.getPassword());
-                Console.WriteLine("You're in! *v*");
+                Console.WriteLine("You're in! *v*\n");
+
+                CalculatorClass calculator = new CalculatorClass();
+                Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
+
+                double? temp;
+                if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
+                {
+                    Console.WriteLine("Result = " + temp.ToString());
+                }
             }
             else
             {
