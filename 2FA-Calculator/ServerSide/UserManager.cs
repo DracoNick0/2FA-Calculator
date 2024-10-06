@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace _2FA_Calculator.Server
+namespace _2FA_Calculator.ServerSide
 {
     class UserManager
     {
