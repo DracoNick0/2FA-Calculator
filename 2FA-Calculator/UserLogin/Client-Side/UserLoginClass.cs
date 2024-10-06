@@ -10,8 +10,8 @@ namespace _2FA_Calculator.UserLogin.ClientSide
 {
     class UserLoginClass
     {
-        UserAuthenticator userAuth;
-        UserManager userManager;
+        private UserAuthenticator userAuth;
+        private UserManager userManager;
         private string inputtedUsername;
         private string inputtedPassword;
 
@@ -21,6 +21,16 @@ namespace _2FA_Calculator.UserLogin.ClientSide
             this.userManager = new UserManager();
             this.inputtedUsername = string.Empty;
             this.inputtedPassword = string.Empty;
+        }
+
+        public string getUsername()
+        {
+            return this.inputtedUsername;
+        }
+
+        public string getPassword()
+        {
+            return this.inputtedPassword;
         }
 
         public void requestUserAndPass()
@@ -39,19 +49,53 @@ namespace _2FA_Calculator.UserLogin.ClientSide
                 }
                 else
                 {
+                    Console.WriteLine("\nIncorrect input, try again.");
                     requestUserAndPass();
                 }
             }
         }
 
-        public string getUsername()
+        // Put this in a different file so that we can salt it.
+        public void createAccount()
         {
-            return this.inputtedUsername;
+            this.inputtedUsername = requestInputFromUserAndConfirm("username");
+            this.inputtedPassword = requestInputFromUserAndConfirm("password");
+
+            // Go through server to create account
+            this.userManager.createAccount(this.inputtedUsername, this.inputtedPassword);
         }
 
-        public string getPassword()
+        public bool authenticateUser()
         {
-            return this.inputtedPassword;
+            return this.userAuth.authenticateUser(this.inputtedUsername, this.inputtedPassword);
+        }
+
+        private string requestInputFromUserAndConfirm(string nameOfInput)
+        {
+            bool userIsSatisfied = false;
+            string? userInput = null;
+
+            while (!userIsSatisfied || userInput == null || userInput == string.Empty)
+            {
+                while (userInput == null || userInput == string.Empty)
+                {
+                    Console.Write("Enter your desired " + nameOfInput + ": ");
+                    userInput = Console.ReadLine();
+
+                    // Check if username already exists ********************************************************
+                    if (userInput == null || userInput == string.Empty)
+                    {
+                        Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
+                    }
+                }
+
+                do
+                {
+                    Console.WriteLine("Is \"" + userInput + "\" correct?");
+                } while (!(userIsSatisfied = assessYesNoInput(Console.ReadLine())));
+            }
+
+            return userInput;
         }
 
         private void requestUsername()
@@ -82,49 +126,6 @@ namespace _2FA_Calculator.UserLogin.ClientSide
             {
                 requestPassword();
             }
-        }
-        
-        public bool authenticateUser()
-        {
-            return this.userAuth.authenticateUser(this.inputtedUsername, this.inputtedPassword);
-        }
-
-        // Put this in a different file so that we can salt it.
-        public void createAccount()
-        {
-            this.inputtedUsername = requestInputFromUserAndConfirm("username");
-            this.inputtedPassword = requestInputFromUserAndConfirm("password");
-
-            // Go through server to create account
-            this.userManager.createAccount(this.inputtedUsername, this.inputtedPassword);
-        }
-
-        private string requestInputFromUserAndConfirm(string nameOfInput)
-        {
-            bool userIsSatisfied = false;
-            string? userInput = null;
-
-            while (!userIsSatisfied || userInput == null || userInput == string.Empty)
-            {
-                while (userInput == null || userInput == string.Empty)
-                {
-                    Console.Write("Enter your desired " + nameOfInput + ": ");
-                    userInput = Console.ReadLine();
-
-                    // Check if username already exists ********************************************************
-                    if (userInput == null || userInput == string.Empty)
-                    {
-                        Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
-                    }
-                }
-
-                do
-                {
-                    Console.WriteLine("Is \"" + userInput + "\" correct?");
-                } while (!(userIsSatisfied = assessYesNoInput(Console.ReadLine())));
-            }
-
-            return userInput;
         }
 
         private bool assessYesNoInput(string? input)

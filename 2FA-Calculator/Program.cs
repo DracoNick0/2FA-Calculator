@@ -17,13 +17,13 @@ if (userInput != null)
             {
                 Console.WriteLine("Username: " + userLogin.getUsername());
                 Console.WriteLine("Password: " + userLogin.getPassword());
-                Console.WriteLine("You're in! :)");
+                Console.WriteLine("You're in! *v*");
             }
             else
             {
                 Console.WriteLine("Username: " + userLogin.getUsername());
                 Console.WriteLine("Password: " + userLogin.getPassword());
-                Console.WriteLine("You're not in! :(");
+                Console.WriteLine("Incorrect username or password! ;n;");
             }
             break;
         case '2':

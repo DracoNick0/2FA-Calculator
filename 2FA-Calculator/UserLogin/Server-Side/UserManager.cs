@@ -6,8 +6,8 @@ namespace _2FA_Calculator.UserLogin.ServerSide
 {
     class UserManager
     {
+        private Hasher hasher;
         private string userStorageFilePath;
-        Hasher hasher;
 
         public UserManager()
         {
