@@ -4,18 +4,21 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using _2FA_Calculator.UserLogin.ServerSide;
 
-namespace _2FA_Calculator.UserLogin
+namespace _2FA_Calculator.UserLogin.ClientSide
 {
     class UserLoginClass
     {
         UserAuthenticator userAuth;
+        UserManager userManager;
         private string inputtedUsername;
         private string inputtedPassword;
 
         public UserLoginClass()
         {
             this.userAuth = new UserAuthenticator();
+            this.userManager = new UserManager();
             this.inputtedUsername = string.Empty;
             this.inputtedPassword = string.Empty;
         }
@@ -93,7 +96,7 @@ namespace _2FA_Calculator.UserLogin
             this.inputtedPassword = requestInputFromUserAndConfirm("password");
 
             // Go through server to create account
-            this.userAuth.createAccount(this.inputtedUsername, this.inputtedPassword);
+            this.userManager.createAccount(this.inputtedUsername, this.inputtedPassword);
         }
 
         private string requestInputFromUserAndConfirm(string nameOfInput)
