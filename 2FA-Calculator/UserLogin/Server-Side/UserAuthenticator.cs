@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -38,9 +39,14 @@ namespace _2FA_Calculator.UserLogin
         // Put this in a different file so that we can salt it.
         public void createAccount(string username, string password)
         {
-            string userLoginStorage = "UserLoginStorage.txt";
+            string filePath = @"../../../UserLogin/Server-Side/ServerSideCredentialsStorage.txt";
 
-            using (StreamWriter sw = new StreamWriter(userLoginStorage, true))
+            if (File.Exists(filePath))
+            {
+                Console.WriteLine("File Exists!");
+            }
+
+            using (StreamWriter sw = new StreamWriter(filePath, true))
             {
                 int saltLength = 8;
                 string salt = generateSalt(saltLength);
@@ -49,6 +55,7 @@ namespace _2FA_Calculator.UserLogin
 
                 string line = username + "," + hashedPassword + "," + salt;
                 sw.WriteLine(line);
+                sw.Flush();
             }
         }
 

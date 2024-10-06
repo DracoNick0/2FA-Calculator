@@ -119,8 +119,6 @@ namespace _2FA_Calculator.UserLogin
                 {
                     Console.WriteLine("Is \"" + userInput + "\" correct?");
                 } while (!(userIsSatisfied = assessYesNoInput(Console.ReadLine())));
-
-                Console.Clear();
             }
 
             return userInput;
