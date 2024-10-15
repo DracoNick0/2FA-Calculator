@@ -15,22 +15,18 @@ namespace _2FA_Calculator.ClientSide
             this.inputtedPassword = string.Empty;
         }
 
+        public string InputtedUsername()
+        { 
+            return this.inputtedUsername;
+        }
+
         public bool login()
         {
             requestUserAndPass();
 
             if (authenticateUserAndPass())
             {
-                Console.WriteLine("\nWelcome " + this.inputtedUsername);
-
-                CalculatorClass calculator = new CalculatorClass();
-                Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
-
-                double? temp;
-                if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
-                {
-                    Console.WriteLine("Result = " + temp.ToString() + "\n");
-                }
+                
 
                 return true;
             }

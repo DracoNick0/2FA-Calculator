@@ -20,7 +20,19 @@ while (true)
         switch (userInput[0])
         {
             case '1':
-                userLogin.login();
+                if (userLogin.login())
+                {
+                    Console.WriteLine("\nWelcome " + userLogin.InputtedUsername());
+
+                    CalculatorClass calculator = new CalculatorClass();
+                    Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
+
+                    double? temp;
+                    if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
+                    {
+                        Console.WriteLine("Result = " + temp.ToString() + "\n");
+                    }
+                }
                 break;
             case '2':
                 userLogin.createAccount();
