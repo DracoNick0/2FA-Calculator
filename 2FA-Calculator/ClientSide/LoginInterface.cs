@@ -30,7 +30,7 @@ namespace _2FA_Calculator.ClientSide
             {
                 if (this.server.sendOTPEmail(this.username))
                 {
-                    if (this.server.authenticateOTPEmail(requestInputAndConf("OTP")))
+                    if (this.server.authenticateOTPEmail(requestUserInput("OTP")))
                     {
                         return true;
                     }
@@ -126,34 +126,17 @@ namespace _2FA_Calculator.ClientSide
             return userInput;
         }
 
-        private void requestUsername()
+        private string requestUserInput(string requesting)
         {
-            Console.Write("Input username: ");
+            Console.Write("Input " + requesting + ": ");
 
             string? userInput = null;
-            if ((userInput = Console.ReadLine()) != null)
+            while ((userInput = Console.ReadLine()) == null)
             {
-                this.username = userInput;
+                Console.Write("Broken input, try again: ");
             }
-            else
-            {
-                requestUsername();
-            }
-        }
-
-        private void requestPassword()
-        {
-            Console.Write("Input password: ");
-
-            string? userInput = null;
-            if ((userInput = Console.ReadLine()) != null)
-            {
-                this.password = userInput;
-            }
-            else
-            {
-                requestPassword();
-            }
+            
+            return userInput;
         }
 
         private bool assessYesNoInput(string? input)
