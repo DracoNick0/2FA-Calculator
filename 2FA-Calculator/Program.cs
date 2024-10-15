@@ -4,9 +4,6 @@
 string? userInput = null;
 while (true)
 {
-    //Email2FA email2FA = new Email2FA();
-    //email2FA.sendOTPEmail("santos_nick@outlook.com");
-
     Console.WriteLine("Please input number corresponding to option: ");
     Console.WriteLine("  1. Login");
     Console.WriteLine("  2. Create new account");
@@ -22,7 +19,7 @@ while (true)
             case '1':
                 if (userLogin.login())
                 {
-                    Console.WriteLine("\nWelcome " + userLogin.InputtedUsername());
+                    Console.WriteLine("\nWelcome " + userLogin.Username());
 
                     CalculatorClass calculator = new CalculatorClass();
                     Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");

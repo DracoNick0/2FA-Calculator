@@ -5,19 +5,21 @@ namespace _2FA_Calculator.ClientSide
     class LoginInterface
     {
         private Server server;
-        private string inputtedUsername;
-        private string inputtedPassword;
+        private string username;
+        private string password;
+        private string email;
 
         public LoginInterface()
         {
             this.server = new Server();
-            this.inputtedUsername = string.Empty;
-            this.inputtedPassword = string.Empty;
+            this.username = string.Empty;
+            this.password = string.Empty;
+            this.email = string.Empty;
         }
 
-        public string InputtedUsername()
+        public string Username()
         { 
-            return this.inputtedUsername;
+            return this.username;
         }
 
         public bool login()
@@ -26,7 +28,7 @@ namespace _2FA_Calculator.ClientSide
 
             if (authenticateUserAndPass())
             {
-                if (this.server.sendOTPEmail("santos_nick@outlook.com"))
+                if (this.server.sendOTPEmail(this.username))
                 {
                     if (this.server.authenticateOTPEmail(requestInputAndConf("OTP")))
                     {
@@ -35,21 +37,38 @@ namespace _2FA_Calculator.ClientSide
                 }
             }
             
-            Console.WriteLine("Username input: " + this.inputtedUsername);
-            Console.WriteLine("Password input: " + this.inputtedPassword);
+            Console.WriteLine("Username input: " + this.username);
+            Console.WriteLine("Password input: " + this.password);
             Console.WriteLine("Incorrect username and/or password! ;n;\n");
 
             return false;
         }
 
         // Put this in a different file so that we can salt it.
-        public void createAccount()
+        public bool createAccount()
         {
-            this.inputtedUsername = requestInputAndConf("username");
-            this.inputtedPassword = requestInputAndConf("password");
+            string? userInput = string.Empty;
+
+            this.username = requestInputAndConf("username");
+            this.password = requestInputAndConf("password");
+
+            this.server.sendOTPEmail(this.email = requestInputAndConf("email"));
+            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+
+            Console.Write("Please input the otp: ");
+            userInput = Console.ReadLine();
+
+            if (userInput != null && !this.server.authenticateOTPEmail(userInput))
+            {
+                Console.WriteLine("Account creation failed, otp was incorrect.");
+                return false;
+            }
+
 
             // Go through server to create account
-            server.createAccount(inputtedUsername, inputtedPassword);
+            this.server.createAccount(this.username, this.password, this.email);
+            Console.WriteLine("Account creation successfull!");
+            return true;
         }
 
         private void requestUserAndPass()
@@ -63,8 +82,8 @@ namespace _2FA_Calculator.ClientSide
 
                 if (tokens.Length == 2)
                 {
-                    this.inputtedUsername = tokens[0];
-                    this.inputtedPassword = tokens[1];
+                    this.username = tokens[0];
+                    this.password = tokens[1];
                 }
                 else
                 {
@@ -76,7 +95,7 @@ namespace _2FA_Calculator.ClientSide
 
         private bool authenticateUserAndPass()
         {
-            return server.authenticateUserAndPass(inputtedUsername, inputtedPassword);
+            return server.authenticateUserAndPass(this.username, this.password);
         }
 
         private string requestInputAndConf(string nameOfInput)
@@ -114,7 +133,7 @@ namespace _2FA_Calculator.ClientSide
             string? userInput = null;
             if ((userInput = Console.ReadLine()) != null)
             {
-                this.inputtedUsername = userInput;
+                this.username = userInput;
             }
             else
             {
@@ -129,7 +148,7 @@ namespace _2FA_Calculator.ClientSide
             string? userInput = null;
             if ((userInput = Console.ReadLine()) != null)
             {
-                this.inputtedPassword = userInput;
+                this.password = userInput;
             }
             else
             {

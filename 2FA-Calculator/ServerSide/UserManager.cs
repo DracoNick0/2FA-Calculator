@@ -13,7 +13,29 @@ namespace _2FA_Calculator.ServerSide
             this.hasher = new Hasher();
         }
 
-        public bool createAccount(string username, string password)
+        public string getUserEmail(string username)
+        {
+            string? line = string.Empty;
+            Hasher hasher = new Hasher();
+
+            using (StreamReader sr = new StreamReader(storageFilePath))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] tokens = line.Split(',');
+
+                    // Find line with the username and email, return email
+                    if (tokens[0].CompareTo(username) == 0)
+                    {
+                        return tokens[3];
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public bool createAccount(string username, string password, string email)
         {
             if (!userExists(username))
             {
@@ -24,7 +46,7 @@ namespace _2FA_Calculator.ServerSide
                 using (StreamWriter sw = new StreamWriter(storageFilePath, true))
                 {
 
-                    string line = username + "," + hashedPassword + "," + salt;
+                    string line = username + "," + hashedPassword + "," + salt + "," + email;
                     sw.WriteLine(line);
                     sw.Flush();
                 }

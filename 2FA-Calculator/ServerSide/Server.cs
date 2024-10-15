@@ -15,9 +15,9 @@ namespace _2FA_Calculator.ServerSide
             this.email2FA = new Email2FA();
         }
 
-        public bool createAccount(string username, string password)
+        public bool createAccount(string username, string password, string email)
         {
-            return this.userManager.createAccount(username, password);
+            return this.userManager.createAccount(username, password, email);
         }
 
         public bool authenticateUserAndPass(string username, string password)
@@ -25,9 +25,9 @@ namespace _2FA_Calculator.ServerSide
             return userAuthenticator.authenticateUserAndPass(username, password);
         }
 
-        public bool sendOTPEmail(string recieverEmail)
+        public bool sendOTPEmail(string userOrEmail)
         {
-            return email2FA.sendOTPEmail(recieverEmail);
+            return email2FA.sendOTPEmail(userOrEmail);
         }
 
         public bool authenticateOTPEmail(string userInput)

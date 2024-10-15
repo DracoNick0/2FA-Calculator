@@ -7,6 +7,7 @@ namespace _2FA_Calculator.ClientSide
     class Email2FA
     {
         OTPGenerator otpGenerator;
+        UserManager userManager;
         private string senderEmail;
         private string senderGoogleAppPassword;
         private string? otp;
@@ -14,6 +15,7 @@ namespace _2FA_Calculator.ClientSide
         public Email2FA()
         {
             this.otpGenerator = new OTPGenerator();
+            this.userManager = new UserManager(@"../../../ServerSide/UserCredentialsStorage.txt");
             this.senderEmail = "ntstemporary7@gmail.com";
             this.senderGoogleAppPassword = "qqud szzc jzdn mmai";
             this.otp = null;
@@ -22,14 +24,24 @@ namespace _2FA_Calculator.ClientSide
         /**
          * Sends an email to the user's email, returns true if successfully sent, else false.
          */
-        public bool sendOTPEmail(string recieverEmail)
+        public bool sendOTPEmail(string userOrEmail)
         {
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress(this.senderEmail);
-                mail.To.Add(new MailAddress(recieverEmail));
+
+                if(userOrEmail.Contains("@"))
+                {
+                    mail.To.Add(new MailAddress(userOrEmail));
+                }
+                else
+                {
+                    mail.To.Add(new MailAddress(this.userManager.getUserEmail(userOrEmail)));
+                }
+
                 mail.Subject = "2FA-Calculator One Time Password";
-                mail.Body = "Your OTP: " + this.otpGenerator.generateOTP();
+                this.otp = this.otpGenerator.generateOTP();
+                mail.Body = "Your OTP: " + this.otp;
                 mail.IsBodyHtml = true;
 
                 var smtp = new SmtpClient("smtp.gmail.com", 587)
