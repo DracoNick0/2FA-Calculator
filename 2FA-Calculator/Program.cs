@@ -4,6 +4,9 @@
 string? userInput = null;
 while (true)
 {
+    //Email2FA email2FA = new Email2FA();
+    //email2FA.sendOTPEmail("santos_nick@outlook.com");
+
     Console.WriteLine("Please input number corresponding to option: ");
     Console.WriteLine("  1. Login");
     Console.WriteLine("  2. Create new account");
