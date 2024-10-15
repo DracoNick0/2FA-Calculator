@@ -26,25 +26,27 @@ namespace _2FA_Calculator.ClientSide
 
             if (authenticateUserAndPass())
             {
-                
-
-                return true;
+                if (this.server.sendOTPEmail("santos_nick@outlook.com"))
+                {
+                    if (this.server.authenticateOTPEmail(requestInputAndConf("OTP")))
+                    {
+                        return true;
+                    }
+                }
             }
-            else
-            {
-                Console.WriteLine("Username: " + this.inputtedUsername);
-                Console.WriteLine("Password: " + this.inputtedPassword);
-                Console.WriteLine("Incorrect username and/or password! ;n;\n");
+            
+            Console.WriteLine("Username input: " + this.inputtedUsername);
+            Console.WriteLine("Password input: " + this.inputtedPassword);
+            Console.WriteLine("Incorrect username and/or password! ;n;\n");
 
-                return false;
-            }
+            return false;
         }
 
         // Put this in a different file so that we can salt it.
         public void createAccount()
         {
-            this.inputtedUsername = requestInputFromUserAndConfirm("username");
-            this.inputtedPassword = requestInputFromUserAndConfirm("password");
+            this.inputtedUsername = requestInputAndConf("username");
+            this.inputtedPassword = requestInputAndConf("password");
 
             // Go through server to create account
             server.createAccount(inputtedUsername, inputtedPassword);
@@ -77,7 +79,7 @@ namespace _2FA_Calculator.ClientSide
             return server.authenticateUserAndPass(inputtedUsername, inputtedPassword);
         }
 
-        private string requestInputFromUserAndConfirm(string nameOfInput)
+        private string requestInputAndConf(string nameOfInput)
         {
             bool userIsSatisfied = false;
             string? userInput = null;

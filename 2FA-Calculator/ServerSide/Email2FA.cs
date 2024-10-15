@@ -9,12 +9,14 @@ namespace _2FA_Calculator.ClientSide
         OTPGenerator otpGenerator;
         private string senderEmail;
         private string senderGoogleAppPassword;
+        private string? otp;
 
         public Email2FA()
         {
             this.otpGenerator = new OTPGenerator();
             this.senderEmail = "ntstemporary7@gmail.com";
             this.senderGoogleAppPassword = "qqud szzc jzdn mmai";
+            this.otp = null;
         }
 
         /**
@@ -41,6 +43,20 @@ namespace _2FA_Calculator.ClientSide
             }
 
             return true;
+        }
+
+        public bool authenticateOTP(string userInput)
+        {
+            if (this.otp != null && userInput != null)
+            {
+                // If the user input is the otp
+                if (this.otp.CompareTo(userInput) == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
