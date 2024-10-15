@@ -57,9 +57,9 @@ namespace _2FA_Calculator.ClientSide
             server.createAccount(inputtedUsername, inputtedPassword);
         }
 
-        public bool authenticateUser()
+        public bool authenticateUserAndPass()
         {
-            return server.authenticateUser(inputtedUsername, inputtedPassword);
+            return server.authenticateUserAndPass(inputtedUsername, inputtedPassword);
         }
 
         private string requestInputFromUserAndConfirm(string nameOfInput)

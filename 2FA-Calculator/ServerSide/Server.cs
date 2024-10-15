@@ -16,9 +16,9 @@
             return this.userManager.createAccount(username, password);
         }
 
-        public bool authenticateUser(string username, string password)
+        public bool authenticateUserAndPass(string username, string password)
         {
-            return userAuthenticator.authenticateUser(username, password);
+            return userAuthenticator.authenticateUserAndPass(username, password);
         }
     }
 }

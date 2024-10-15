@@ -21,7 +21,7 @@ while (true)
         {
             case '1':
                 userLogin.requestUserAndPass();
-                if (userLogin.authenticateUser())
+                if (userLogin.authenticateUserAndPass())
                 {
                     Console.WriteLine("\nWelcome " + userLogin.getUsername());
 

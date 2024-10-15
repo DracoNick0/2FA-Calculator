@@ -9,7 +9,7 @@
         }
 
         // Put this in a different file and add security.
-        public bool authenticateUser(string username, string password)
+        public bool authenticateUserAndPass(string username, string password)
         {
             string? line = string.Empty;
             Hasher hasher = new Hasher();
