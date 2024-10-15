@@ -20,26 +20,7 @@ while (true)
         switch (userInput[0])
         {
             case '1':
-                userLogin.requestUserAndPass();
-                if (userLogin.authenticateUserAndPass())
-                {
-                    Console.WriteLine("\nWelcome " + userLogin.getUsername());
-
-                    CalculatorClass calculator = new CalculatorClass();
-                    Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
-
-                    double? temp;
-                    if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
-                    {
-                        Console.WriteLine("Result = " + temp.ToString() + "\n");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Username: " + userLogin.getUsername());
-                    Console.WriteLine("Password: " + userLogin.getPassword());
-                    Console.WriteLine("Incorrect username and/or password! ;n;\n");
-                }
+                userLogin.login();
                 break;
             case '2':
                 userLogin.createAccount();

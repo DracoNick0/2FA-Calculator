@@ -15,17 +15,46 @@ namespace _2FA_Calculator.ClientSide
             this.inputtedPassword = string.Empty;
         }
 
-        public string getUsername()
+        public bool login()
         {
-            return this.inputtedUsername;
+            requestUserAndPass();
+
+            if (authenticateUserAndPass())
+            {
+                Console.WriteLine("\nWelcome " + this.inputtedUsername);
+
+                CalculatorClass calculator = new CalculatorClass();
+                Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
+
+                double? temp;
+                if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
+                {
+                    Console.WriteLine("Result = " + temp.ToString() + "\n");
+                }
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Username: " + this.inputtedUsername);
+                Console.WriteLine("Password: " + this.inputtedPassword);
+                Console.WriteLine("Incorrect username and/or password! ;n;\n");
+
+                return false;
+            }
         }
 
-        public string getPassword()
+        // Put this in a different file so that we can salt it.
+        public void createAccount()
         {
-            return this.inputtedPassword;
+            this.inputtedUsername = requestInputFromUserAndConfirm("username");
+            this.inputtedPassword = requestInputFromUserAndConfirm("password");
+
+            // Go through server to create account
+            server.createAccount(inputtedUsername, inputtedPassword);
         }
 
-        public void requestUserAndPass()
+        private void requestUserAndPass()
         {
             Console.Write("Input username,password: ");
 
@@ -47,17 +76,7 @@ namespace _2FA_Calculator.ClientSide
             }
         }
 
-        // Put this in a different file so that we can salt it.
-        public void createAccount()
-        {
-            this.inputtedUsername = requestInputFromUserAndConfirm("username");
-            this.inputtedPassword = requestInputFromUserAndConfirm("password");
-
-            // Go through server to create account
-            server.createAccount(inputtedUsername, inputtedPassword);
-        }
-
-        public bool authenticateUserAndPass()
+        private bool authenticateUserAndPass()
         {
             return server.authenticateUserAndPass(inputtedUsername, inputtedPassword);
         }
