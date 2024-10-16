@@ -2,12 +2,12 @@
 
 namespace _2FA_Calculator.ServerSide
 {
-    class UserManager
+    class StorageManager
     {
         private Hasher hasher;
         private string storageFilePath;
 
-        public UserManager(string storageFilePath)
+        public StorageManager(string storageFilePath)
         {
             this.storageFilePath = storageFilePath;
             this.hasher = new Hasher();

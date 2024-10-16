@@ -6,13 +6,13 @@ namespace _2FA_Calculator.ProxyServer
     {
         private static string userCredeintialsStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
         private UserAuthenticator userAuthenticator;
-        private UserManager userManager;
+        private StorageManager userManager;
         private Email2FA email2FA;
 
         public Server()
         {
             this.userAuthenticator = new UserAuthenticator(userCredeintialsStorageFilePath);
-            this.userManager = new UserManager(userCredeintialsStorageFilePath);
+            this.userManager = new StorageManager(userCredeintialsStorageFilePath);
             this.email2FA = new Email2FA();
         }
 
