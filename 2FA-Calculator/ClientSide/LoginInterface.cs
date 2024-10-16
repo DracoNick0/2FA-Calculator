@@ -50,8 +50,21 @@ namespace _2FA_Calculator.ClientSide
         public bool createAccount()
         {
             string? userInput = string.Empty;
+            bool userExists = true;
 
-            this.username = requestInputAndConf("username");
+            while (userExists)
+            {
+                this.username = requestInputAndConf("username");
+                if (!this.server.userExists(this.username))
+                {
+                    userExists = false;
+                }
+                else
+                {
+                    Console.WriteLine("Username already exists, try another.");
+                }
+            }
+
             this.password = requestInputAndConf("password");
 
             this.server.sendOTPEmail(this.email = requestInputAndConf("email"));
@@ -134,7 +147,6 @@ namespace _2FA_Calculator.ClientSide
                     Console.Write("Enter your desired " + nameOfInput + ": ");
                     userInput = Console.ReadLine();
 
-                    // Check if username already exists ********************************************************
                     if (userInput == null || userInput == string.Empty)
                     {
                         Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
