@@ -16,7 +16,6 @@ namespace _2FA_Calculator.ServerSide
         public string getUserEmail(string username)
         {
             string? line = string.Empty;
-            Hasher hasher = new Hasher();
 
             using (StreamReader sr = new StreamReader(storageFilePath))
             {
