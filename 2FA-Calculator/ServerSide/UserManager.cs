@@ -105,7 +105,7 @@ namespace _2FA_Calculator.ServerSide
             File.WriteAllLines(storageFilePath, wholeTextFile);
         }
 
-        private bool userExists(string username)
+        public bool userExists(string username)
         {
             string? line = string.Empty;
 
