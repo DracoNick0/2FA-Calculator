@@ -7,7 +7,8 @@ while (true)
     Console.WriteLine("Please input number corresponding to option: ");
     Console.WriteLine("  1. Login");
     Console.WriteLine("  2. Create new account");
-    Console.WriteLine("  3. Exit");
+    Console.WriteLine("  3. Forgot login");
+    Console.WriteLine("  4. Exit");
 
     userInput = Console.ReadLine();
     if (userInput != null)
@@ -35,6 +36,9 @@ while (true)
                 userLogin.createAccount();
                 break;
             case '3':
+                userLogin.forgotLogin();
+                break;
+            case '4':
                 return 1;
         }
     }

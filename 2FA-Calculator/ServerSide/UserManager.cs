@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Mail;
+using System.Text;
 
 namespace _2FA_Calculator.ServerSide
 {
@@ -57,6 +58,51 @@ namespace _2FA_Calculator.ServerSide
             {
                 return false;
             }
+        }
+
+        // Storage of passwords needs work, also this needs to be broken up*******************************************************************************************************************
+        public void updatePassword(string userOrEmail, string newPassword)
+        {
+            int credentialIndex = 0;
+
+            if (userOrEmail.Contains("@"))
+            {
+                credentialIndex = 3;
+            }
+            else
+            {
+                credentialIndex = 0;
+            }
+
+            string? line = string.Empty;
+            int lineToModify = -1;
+            string[] tokens = new string[4];
+
+            // Read through the user storage
+            using (StreamReader sr = new StreamReader(storageFilePath))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    lineToModify++;
+                    tokens = line.Split(',');
+
+                    // Check if this line contains the username
+                    if (tokens[credentialIndex].CompareTo(userOrEmail) == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Takes the whole storage file and edits one line.
+            string[] wholeTextFile = File.ReadAllLines(storageFilePath);
+            if (lineToModify < wholeTextFile.Length)
+            {
+                wholeTextFile[lineToModify] = tokens[0] + ","+ hasher.computeSha256Hash(newPassword + tokens[2]) + "," + tokens[2] + "," + tokens[3];
+            }
+
+            // Writes the edited version back to the storage file.
+            File.WriteAllLines(storageFilePath, wholeTextFile);
         }
 
         private bool userExists(string username)

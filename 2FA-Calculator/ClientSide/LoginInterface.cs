@@ -1,4 +1,5 @@
 ﻿using _2FA_Calculator.ServerSide;
+using System.Net.Mail;
 
 namespace _2FA_Calculator.ClientSide
 {
@@ -30,6 +31,7 @@ namespace _2FA_Calculator.ClientSide
             {
                 if (this.server.sendOTPEmail(this.username))
                 {
+                    Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
                     if (this.server.authenticateOTPEmail(requestUserInput("OTP")))
                     {
                         return true;
@@ -58,7 +60,7 @@ namespace _2FA_Calculator.ClientSide
             Console.Write("Please input the otp: ");
             userInput = Console.ReadLine();
 
-            if (userInput != null && !this.server.authenticateOTPEmail(userInput))
+            if (userInput == null || !this.server.authenticateOTPEmail(userInput))
             {
                 Console.WriteLine("Account creation failed, otp was incorrect.");
                 return false;
@@ -68,6 +70,28 @@ namespace _2FA_Calculator.ClientSide
             // Go through server to create account
             this.server.createAccount(this.username, this.password, this.email);
             Console.WriteLine("Account creation successfull!");
+            return true;
+        }
+
+        // Make this function more secure, by making the client side have to send a code to the server along side the new password, for the password to be saved.
+        public bool forgotLogin()
+        {
+            string? userOrEmail = string.Empty;
+            string? userInput = string.Empty;
+
+            this.server.sendOTPEmail(userOrEmail = requestInputAndConf("username or email"));
+            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+
+            Console.Write("Please input the otp: ");
+            userInput = Console.ReadLine();
+
+            if (userInput == null || !this.server.authenticateOTPEmail(userInput))
+            {
+                Console.WriteLine("User authentication failed, otp was incorrect.");
+                return false;
+            }
+
+            this.server.updatePassword(userOrEmail, requestInputAndConf("new password"));
             return true;
         }
 
@@ -131,7 +155,7 @@ namespace _2FA_Calculator.ClientSide
             Console.Write("Input " + requesting + ": ");
 
             string? userInput = null;
-            while ((userInput = Console.ReadLine()) == null)
+            while ((userInput = Console.ReadLine()) == null || userInput == string.Empty)
             {
                 Console.Write("Broken input, try again: ");
             }

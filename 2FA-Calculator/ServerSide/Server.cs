@@ -22,17 +22,22 @@ namespace _2FA_Calculator.ServerSide
 
         public bool authenticateUserAndPass(string username, string password)
         {
-            return userAuthenticator.authenticateUserAndPass(username, password);
+            return this.userAuthenticator.authenticateUserAndPass(username, password);
         }
 
         public bool sendOTPEmail(string userOrEmail)
         {
-            return email2FA.sendOTPEmail(userOrEmail);
+            return this.email2FA.sendOTPEmail(userOrEmail);
         }
 
         public bool authenticateOTPEmail(string userInput)
         {
-            return email2FA.authenticateOTP(userInput);
+            return this.email2FA.authenticateOTP(userInput);
+        }
+
+        public void updatePassword(string userOrEmail, string newPassword)
+        {
+            this.userManager.updatePassword(userOrEmail, newPassword);
         }
     }
 }
