@@ -45,16 +45,25 @@ namespace _2FA_Calculator.ServerSide
             return null;
         }
 
-        /*
         public bool populatePersistentStorage(Dictionary<string, Dictionary<string, string>> dynamicStorage)
         {
+            if (this.storageFilePath != null)
+            {
+                using (StreamWriter sw = new StreamWriter(storageFilePath))
+                {
+                    foreach (string user in dynamicStorage.Keys)
+                    {
+                        sw.WriteLine(user + ","
+                            + dynamicStorage[user]["hashedPassword"] + ","
+                            + dynamicStorage[user]["salt"] + ","
+                            + dynamicStorage[user]["email"]);
+                    }
 
-            wholeTextFile[lineToModify] = tokens[0] + "," + hasher.computeSha256Hash(newPassword + tokens[2]) + "," + tokens[2] + "," + tokens[3];
+                    return true;
+                }
+            }
 
-            // Writes the edited version back to the storage file.
-            File.WriteAllLines(storageFilePath, wholeTextFile);
-            return true;
+            return false;
         }
-        */
     }
 }
