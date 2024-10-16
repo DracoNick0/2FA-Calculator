@@ -1,4 +1,4 @@
-﻿using _2FA_Calculator.ServerSide;
+﻿using _2FA_Calculator.ProxyServer;
 
 namespace _2FA_Calculator.ClientSide
 {

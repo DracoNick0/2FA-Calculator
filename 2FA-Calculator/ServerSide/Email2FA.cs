@@ -1,23 +1,20 @@
-﻿using _2FA_Calculator.ServerSide;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Net;
 
-namespace _2FA_Calculator.ClientSide
+namespace _2FA_Calculator.ServerSide
 {
     class Email2FA
     {
         OTPGenerator otpGenerator;
         UserManager userManager;
-        private string senderEmail;
-        private string senderGoogleAppPassword;
+        private const string senderEmail = "ntstemporary7@gmail.com";
+        private const string senderGoogleAppPassword = "qqud szzc jzdn mmai";
         private string? otp;
 
         public Email2FA()
         {
             this.otpGenerator = new OTPGenerator();
             this.userManager = new UserManager(@"../../../ServerSide/UserCredentialsStorage.txt");
-            this.senderEmail = "ntstemporary7@gmail.com";
-            this.senderGoogleAppPassword = "qqud szzc jzdn mmai";
             this.otp = null;
         }
 
@@ -28,7 +25,7 @@ namespace _2FA_Calculator.ClientSide
         {
             using (MailMessage mail = new MailMessage())
             {
-                mail.From = new MailAddress(this.senderEmail);
+                mail.From = new MailAddress(Email2FA.senderEmail);
 
                 if(RandomFunctions.isValidEmail(userOrEmail))
                 {
@@ -47,7 +44,7 @@ namespace _2FA_Calculator.ClientSide
                 var smtp = new SmtpClient("smtp.gmail.com", 587)
                 {
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(this.senderEmail, this.senderGoogleAppPassword),
+                    Credentials = new NetworkCredential(Email2FA.senderEmail, Email2FA.senderGoogleAppPassword),
                     EnableSsl = true,
                 };
 

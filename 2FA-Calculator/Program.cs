@@ -1,6 +1,5 @@
 ﻿using _2FA_Calculator.ClientSide;
 
-
 string? userInput = null;
 while (true)
 {

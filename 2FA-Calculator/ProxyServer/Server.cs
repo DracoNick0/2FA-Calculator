@@ -1,17 +1,18 @@
-﻿using _2FA_Calculator.ClientSide;
+﻿using _2FA_Calculator.ServerSide;
 
-namespace _2FA_Calculator.ServerSide
+namespace _2FA_Calculator.ProxyServer
 {
     class Server
     {
-        UserAuthenticator userAuthenticator;
-        UserManager userManager;
-        Email2FA email2FA;
+        private static string userCredeintialsStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
+        private UserAuthenticator userAuthenticator;
+        private UserManager userManager;
+        private Email2FA email2FA;
 
         public Server()
         {
-            this.userAuthenticator = new UserAuthenticator(@"../../../ServerSide/UserCredentialsStorage.txt");
-            this.userManager = new UserManager(@"../../../ServerSide/UserCredentialsStorage.txt");
+            this.userAuthenticator = new UserAuthenticator(userCredeintialsStorageFilePath);
+            this.userManager = new UserManager(userCredeintialsStorageFilePath);
             this.email2FA = new Email2FA();
         }
 
@@ -42,7 +43,7 @@ namespace _2FA_Calculator.ServerSide
 
         public bool userExists(string username)
         {
-            return userManager.userExists(username);
+            return this.userManager.userExists(username);
         }
     }
 }

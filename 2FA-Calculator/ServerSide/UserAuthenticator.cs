@@ -2,7 +2,7 @@
 {
     class UserAuthenticator
     {
-        string storageFilePath;
+        private string storageFilePath;
         public UserAuthenticator(string storageFilePath)
         {
             this.storageFilePath = storageFilePath;
