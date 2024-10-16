@@ -47,7 +47,6 @@ namespace _2FA_Calculator.ClientSide
             return false;
         }
 
-        // Put this in a different file so that we can salt it.
         public bool createAccount()
         {
             string? userInput = string.Empty;
@@ -68,6 +67,7 @@ namespace _2FA_Calculator.ClientSide
 
             this.password = this.requester.requestInputAndConf("password");
 
+            // Make the following code the servers responsibility for higher security **********************************************************************************************
             this.server.sendOTPEmail(this.email = this.requester.requestInputAndConf("email"));
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
