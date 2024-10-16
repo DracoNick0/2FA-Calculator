@@ -9,9 +9,9 @@ namespace _2FA_Calculator.ServerSide
         private Dictionary<string, Dictionary<string, string>> everyUsersDetails;
         private Hasher hasher;
 
-        public DynamicStorageManager()
+        public DynamicStorageManager(Dictionary<string, Dictionary<string, string>> storage)
         {
-            this.everyUsersDetails = new Dictionary<string, Dictionary<string, string>>();
+            this.everyUsersDetails = storage;
             this.hasher = new Hasher();
         }
 

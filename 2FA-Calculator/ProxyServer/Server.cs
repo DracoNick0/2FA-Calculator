@@ -5,12 +5,25 @@ namespace _2FA_Calculator.ProxyServer
     class Server
     {
         private static string userCredeintialsStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
+        private PersistentStorageManager persistentStorageManager;
+        private DynamicStorageManager dynamicStorageManager;
         private UserAuthenticator userAuthenticator;
         private PersistentStorageManager userManager;
         private Email2FA email2FA;
 
         public Server()
         {
+            this.persistentStorageManager = new PersistentStorageManager(userCredeintialsStorageFilePath);
+            Dictionary<string, Dictionary<string, string>>? tempDynaStorage = this.persistentStorageManager.populateDynamicStorage();
+            if (tempDynaStorage != null)
+            {
+                this.dynamicStorageManager = new DynamicStorageManager(tempDynaStorage);
+            }
+            else
+            {
+                this.dynamicStorageManager = new DynamicStorageManager(new Dictionary<string, Dictionary<string, string>>());
+            }
+
             this.userAuthenticator = new UserAuthenticator(userCredeintialsStorageFilePath);
             this.userManager = new PersistentStorageManager(userCredeintialsStorageFilePath);
             this.email2FA = new Email2FA();
@@ -18,7 +31,7 @@ namespace _2FA_Calculator.ProxyServer
 
         public bool createAccount(string username, string password, string email)
         {
-            return this.userManager.createAccount(username, password, email);
+            return this.dynamicStorageManager.createAccount(username, password, email);
         }
 
         public string authenticateUserAndPass(string username, string password)
@@ -38,12 +51,12 @@ namespace _2FA_Calculator.ProxyServer
 
         public void updatePassword(string userOrEmail, string newPassword)
         {
-            this.userManager.updatePassword(userOrEmail, newPassword);
+            this.dynamicStorageManager.updatePassword(userOrEmail, newPassword);
         }
 
         public bool userExists(string username)
         {
-            return this.userManager.userExists(username);
+            return this.dynamicStorageManager.userExists(username);
         }
     }
 }
