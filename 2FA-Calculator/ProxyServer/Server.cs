@@ -21,7 +21,7 @@ namespace _2FA_Calculator.ProxyServer
             return this.userManager.createAccount(username, password, email);
         }
 
-        public bool authenticateUserAndPass(string username, string password)
+        public string authenticateUserAndPass(string username, string password)
         {
             return this.userAuthenticator.authenticateUserAndPass(username, password);
         }

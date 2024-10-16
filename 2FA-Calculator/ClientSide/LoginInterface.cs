@@ -26,9 +26,9 @@ namespace _2FA_Calculator.ClientSide
 
         public bool login()
         {
-            requestUserAndPass();
+            this.requestUserAndPass();
 
-            if (authenticateUserAndPass())
+            if (this.authenticateUserAndPass() == "User verified!")
             {
                 if (this.server.sendOTPEmail(this.username))
                 {
@@ -87,7 +87,7 @@ namespace _2FA_Calculator.ClientSide
             return true;
         }
 
-        // Make this function more secure, by making the client side have to send a code to the server along side the new password, for the password to be saved.
+        // Make this function more secure, by making the client side have to send a code to the server along side the new password, for the password to be saved. ********************************
         public bool forgotLogin()
         {
             string? userOrEmail = string.Empty;
@@ -131,7 +131,7 @@ namespace _2FA_Calculator.ClientSide
             }
         }
 
-        private bool authenticateUserAndPass()
+        private string authenticateUserAndPass()
         {
             return server.authenticateUserAndPass(this.username, this.password);
         }

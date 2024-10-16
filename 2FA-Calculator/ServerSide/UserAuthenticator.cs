@@ -8,8 +8,8 @@
             this.storageFilePath = storageFilePath;
         }
 
-        // Put this in a different file and add security.
-        public bool authenticateUserAndPass(string username, string password)
+        // Add the ability to count incorrect attempts and return "Too many incorrect attempts!" ***********************
+        public string authenticateUserAndPass(string username, string password)
         {
             string? line = string.Empty;
             Hasher hasher = new Hasher();
@@ -23,12 +23,12 @@
                     string saltedPasswordHash = hasher.computeSha256Hash(password + tokens[2]);
                     if (tokens[0].CompareTo(username) == 0 && tokens[1].CompareTo(saltedPasswordHash) == 0)
                     {
-                        return true;
+                        return "User verified!";
                     }
                 }
             }
 
-            return false;
+            return "Incorrect credentials!";
         }
     }
 }
