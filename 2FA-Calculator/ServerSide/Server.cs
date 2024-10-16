@@ -39,5 +39,10 @@ namespace _2FA_Calculator.ServerSide
         {
             this.userManager.updatePassword(userOrEmail, newPassword);
         }
+
+        public bool userExists(string username)
+        {
+            return userManager.userExists(username);
+        }
     }
 }
