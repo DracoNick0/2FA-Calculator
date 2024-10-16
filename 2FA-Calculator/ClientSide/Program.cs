@@ -3,6 +3,7 @@
 string? userInput = null;
 while (true)
 {
+    Console.Clear();
     Console.WriteLine("Please input number corresponding to option: ");
     Console.WriteLine("  1. Login");
     Console.WriteLine("  2. Create new account");
@@ -19,16 +20,10 @@ while (true)
             case '1':
                 if (userLogin.login())
                 {
-                    Console.WriteLine("\nWelcome " + userLogin.Username());
-
+                    Console.Clear();
                     CalculatorClass calculator = new CalculatorClass();
-                    Console.WriteLine("Input a simple expression with two integers and an operator, no spaces.");
-
-                    double? temp;
-                    if ((temp = calculator.evaluateExpression(Console.ReadLine())) != null)
-                    {
-                        Console.WriteLine("Result = " + temp.ToString() + "\n");
-                    }
+                    Console.WriteLine("\nWelcome " + userLogin.Username() + "!\n");
+                    calculator.interactWithCalculator();
                 }
                 break;
             case '2':

@@ -4,7 +4,46 @@
     {
         public CalculatorClass() { }
 
-        public double? evaluateExpression(string? expression)
+        public void interactWithCalculator()
+        {
+            while (true)
+            {
+                Console.WriteLine("Please select from the options:");
+                Console.WriteLine("  1. Use calculator.");
+                Console.WriteLine("  2. How to use calculator?");
+                Console.WriteLine("  3. Exit.");
+
+                string? userInput = Console.ReadLine();
+                if (userInput != null)
+                {
+                    switch (userInput)
+                    {
+                        case "1":
+                            double? result;
+                            Console.WriteLine("Enter your simple expression: ");
+
+                            if ((result = evaluateExpression(Console.ReadLine())) != null)
+                            {
+                                Console.WriteLine("Result = " + result.ToString() + "\n");
+                            }
+                            break;
+                        case "2":
+                            Console.Clear();
+                            Console.WriteLine("How to use the calculator:");
+                            Console.WriteLine("  1. Enter a simple expression with two integers and an operator, no spaces.");
+                            Console.WriteLine("  2. Press enter.");
+                            Console.WriteLine("    - eg. \"10*15\", \"7^3\", \"2024/100\"\n");
+                            break;
+                        case "3":
+                            return;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private double? evaluateExpression(string? expression)
         {
             // Assuuming the expression is 3 things:
             // 2 Integers and an operator
@@ -34,7 +73,7 @@
             return null;
         }
 
-        public int getFirstIntInString(ref string expression)
+        private int getFirstIntInString(ref string expression)
         {
             int i = 0;
             string integer = string.Empty;
