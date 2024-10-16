@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace _2FA_Calculator.ServerSide
 {
-    internal class RandomFunctions
+    class RandomFunctions
     {
+        static public bool isValidEmail(string input)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(input, pattern);
+        }
     }
 }

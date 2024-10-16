@@ -1,5 +1,4 @@
-﻿using System.Net.Mail;
-using System.Text;
+﻿using System.Text;
 
 namespace _2FA_Calculator.ServerSide
 {
@@ -65,7 +64,7 @@ namespace _2FA_Calculator.ServerSide
         {
             int credentialIndex = 0;
 
-            if (userOrEmail.Contains("@"))
+            if (RandomFunctions.isValidEmail(userOrEmail))
             {
                 credentialIndex = 3;
             }

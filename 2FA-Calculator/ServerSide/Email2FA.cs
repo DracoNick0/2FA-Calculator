@@ -30,7 +30,7 @@ namespace _2FA_Calculator.ClientSide
             {
                 mail.From = new MailAddress(this.senderEmail);
 
-                if(userOrEmail.Contains("@"))
+                if(RandomFunctions.isValidEmail(userOrEmail))
                 {
                     mail.To.Add(new MailAddress(userOrEmail));
                 }

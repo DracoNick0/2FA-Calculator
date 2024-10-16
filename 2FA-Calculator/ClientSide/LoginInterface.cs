@@ -1,5 +1,4 @@
 ﻿using _2FA_Calculator.ServerSide;
-using System.Net.Mail;
 
 namespace _2FA_Calculator.ClientSide
 {
