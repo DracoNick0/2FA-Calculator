@@ -6,7 +6,7 @@ namespace _2FA_Calculator.ServerSide
     class Email2FA
     {
         OTPGenerator otpGenerator;
-        StorageManager userManager;
+        PersistentStorageManager userManager;
         private const string senderEmail = "ntstemporary7@gmail.com";
         private const string senderGoogleAppPassword = "qqud szzc jzdn mmai";
         private string? otp;
@@ -14,7 +14,7 @@ namespace _2FA_Calculator.ServerSide
         public Email2FA()
         {
             this.otpGenerator = new OTPGenerator();
-            this.userManager = new StorageManager(@"../../../ServerSide/UserCredentialsStorage.txt");
+            this.userManager = new PersistentStorageManager(@"../../../ServerSide/UserCredentialsStorage.txt");
             this.otp = null;
         }
 

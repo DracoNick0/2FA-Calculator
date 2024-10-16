@@ -2,12 +2,12 @@
 
 namespace _2FA_Calculator.ServerSide
 {
-    class StorageManager
+    class PersistentStorageManager
     {
         private Hasher hasher;
         private string storageFilePath;
 
-        public StorageManager(string storageFilePath)
+        public PersistentStorageManager(string storageFilePath)
         {
             this.storageFilePath = storageFilePath;
             this.hasher = new Hasher();
