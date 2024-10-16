@@ -8,15 +8,12 @@
 
             while (userInput == null || userInput == string.Empty)
             {
-                while (userInput == null || userInput == string.Empty)
-                {
-                    Console.Write("Enter your desired " + nameOfInput + ": ");
-                    userInput = Console.ReadLine();
+                Console.Write("Enter your desired " + nameOfInput + ": ");
+                userInput = Console.ReadLine();
 
-                    if (userInput == null || userInput == string.Empty)
-                    {
-                        Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
-                    }
+                if (userInput == null || userInput == string.Empty)
+                {
+                    Console.Write("\n" + nameOfInput + " not valid, try again: ");
                 }
             }
 
@@ -28,7 +25,7 @@
             bool userIsSatisfied = false;
             string? userInput = null;
 
-            while (!userIsSatisfied || userInput == null || userInput == string.Empty)
+            while (!userIsSatisfied)
             {
                 while (userInput == null || userInput == string.Empty)
                 {

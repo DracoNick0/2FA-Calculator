@@ -5,6 +5,7 @@ namespace _2FA_Calculator.ClientSide
     class LoginInterface
     {
         private Server server;
+        private RequestFromUserMethods requester;
         private string username;
         private string password;
         private string email;
@@ -12,6 +13,7 @@ namespace _2FA_Calculator.ClientSide
         public LoginInterface()
         {
             this.server = new Server();
+            this.requester = new RequestFromUserMethods();
             this.username = string.Empty;
             this.password = string.Empty;
             this.email = string.Empty;
@@ -31,7 +33,7 @@ namespace _2FA_Calculator.ClientSide
                 if (this.server.sendOTPEmail(this.username))
                 {
                     Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-                    if (this.server.authenticateOTPEmail(requestUserInput("OTP")))
+                    if (this.server.authenticateOTPEmail(this.requester.requestInput("OTP")))
                     {
                         return true;
                     }
@@ -53,7 +55,7 @@ namespace _2FA_Calculator.ClientSide
 
             while (userExists)
             {
-                this.username = requestInputAndConf("username");
+                this.username = this.requester.requestInputAndConf("username");
                 if (!this.server.userExists(this.username))
                 {
                     userExists = false;
@@ -64,9 +66,9 @@ namespace _2FA_Calculator.ClientSide
                 }
             }
 
-            this.password = requestInputAndConf("password");
+            this.password = this.requester.requestInputAndConf("password");
 
-            this.server.sendOTPEmail(this.email = requestInputAndConf("email"));
+            this.server.sendOTPEmail(this.email = this.requester.requestInputAndConf("email"));
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
             Console.Write("Please input the otp: ");
@@ -91,7 +93,7 @@ namespace _2FA_Calculator.ClientSide
             string? userOrEmail = string.Empty;
             string? userInput = string.Empty;
 
-            this.server.sendOTPEmail(userOrEmail = requestInputAndConf("username or email"));
+            this.server.sendOTPEmail(userOrEmail = this.requester.requestInputAndConf("username or email"));
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
             Console.Write("Please input the otp: ");
@@ -103,18 +105,18 @@ namespace _2FA_Calculator.ClientSide
                 return false;
             }
 
-            this.server.updatePassword(userOrEmail, requestInputAndConf("new password"));
+            this.server.updatePassword(userOrEmail, this.requester.requestInputAndConf("new password"));
             return true;
         }
 
         private void requestUserAndPass()
         {
-            Console.Write("Input username,password: ");
+            Console.WriteLine("Input your \"username password\".");
 
             string? userInput = null;
             if ((userInput = Console.ReadLine()) != null)
             {
-                string[] tokens = userInput.Split(',');
+                string[] tokens = userInput.Split(' ');
 
                 if (tokens.Length == 2)
                 {
@@ -132,62 +134,6 @@ namespace _2FA_Calculator.ClientSide
         private bool authenticateUserAndPass()
         {
             return server.authenticateUserAndPass(this.username, this.password);
-        }
-
-        private string requestInputAndConf(string nameOfInput)
-        {
-            bool userIsSatisfied = false;
-            string? userInput = null;
-
-            while (!userIsSatisfied || userInput == null || userInput == string.Empty)
-            {
-                while (userInput == null || userInput == string.Empty)
-                {
-                    Console.Write("Enter your desired " + nameOfInput + ": ");
-                    userInput = Console.ReadLine();
-
-                    if (userInput == null || userInput == string.Empty)
-                    {
-                        Console.WriteLine("\n" + nameOfInput + " not valid, try again.");
-                    }
-                }
-
-                do
-                {
-                    Console.WriteLine("Is \"" + userInput + "\" correct?");
-                } while (!(userIsSatisfied = assessYesNoInput(Console.ReadLine())));
-            }
-
-            return userInput;
-        }
-
-        private string requestUserInput(string requesting)
-        {
-            Console.Write("Input " + requesting + ": ");
-
-            string? userInput = null;
-            while ((userInput = Console.ReadLine()) == null || userInput == string.Empty)
-            {
-                Console.Write("Broken input, try again: ");
-            }
-            
-            return userInput;
-        }
-
-        private bool assessYesNoInput(string? input)
-        {
-            if (input != null)
-            {
-                if (input.Length == 1)
-                {
-                    if (input.CompareTo("y") == 0 || input.CompareTo("Y") == 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
         }
     }
 }
