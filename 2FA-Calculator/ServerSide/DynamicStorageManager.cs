@@ -100,6 +100,11 @@ namespace _2FA_Calculator.ServerSide
             return false;
         }
 
+        public Dictionary<string, string> getUserDetails(string user)
+        {
+            return this.allUsersDeets[user];
+        }
+
         private string generateSalt(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

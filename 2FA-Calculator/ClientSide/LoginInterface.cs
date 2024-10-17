@@ -76,6 +76,7 @@ namespace _2FA_Calculator.ClientSide
 
             if (userInput == null || !this.server.authenticateOTPEmail(userInput))
             {
+                Console.Clear();
                 Console.WriteLine("Account creation failed, otp was incorrect.");
                 return false;
             }
@@ -83,6 +84,7 @@ namespace _2FA_Calculator.ClientSide
 
             // Go through server to create account
             this.server.createAccount(this.username, this.password, this.email);
+            Console.Clear();
             Console.WriteLine("Account creation successfull!");
             return true;
         }

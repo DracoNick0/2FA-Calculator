@@ -1,9 +1,10 @@
 ﻿using _2FA_Calculator.ClientSide;
 
+LoginInterface userLogin = new LoginInterface();
+
 string? userInput = null;
 while (true)
 {
-    Console.Clear();
     Console.WriteLine("Please input number corresponding to option: ");
     Console.WriteLine("  1. Login");
     Console.WriteLine("  2. Create new account");
@@ -13,7 +14,6 @@ while (true)
     userInput = Console.ReadLine();
     if (userInput != null)
     {
-        LoginInterface userLogin = new LoginInterface();
 
         switch (userInput[0])
         {
@@ -22,7 +22,7 @@ while (true)
                 {
                     Console.Clear();
                     CalculatorClass calculator = new CalculatorClass();
-                    Console.WriteLine("\nWelcome " + userLogin.Username() + "!\n");
+                    Console.WriteLine("Welcome " + userLogin.Username() + "!\n");
                     calculator.interactWithCalculator();
                 }
                 break;
