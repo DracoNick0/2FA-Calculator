@@ -26,7 +26,7 @@ namespace _2FA_Calculator.ProxyServer
 
             this.userAuthenticator = new UserAuthenticator(userCredeintialsStorageFilePath);
             this.userManager = new PersistentStorageManager(userCredeintialsStorageFilePath);
-            this.email2FA = new Email2FA();
+            this.email2FA = new Email2FA(dynamicStorageManager);
         }
 
         public bool createAccount(string username, string password, string email)
