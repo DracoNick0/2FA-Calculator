@@ -21,23 +21,23 @@ namespace _2FA_Calculator.ServerSide
         /**
          * Sends an email to the user's email, returns true if successfully sent, else false.
          */
-        public bool sendOTPEmail(string userOrEmail)
+        public bool SendOTPEmail(string userOrEmail)
         {
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress(Email2FA.senderEmail);
 
-                if(RandomFunctions.isValidEmail(userOrEmail))
+                if(RandomFunctions.IsValidEmail(userOrEmail))
                 {
                     mail.To.Add(new MailAddress(userOrEmail));
                 }
                 else
                 {
-                    mail.To.Add(new MailAddress(this.dynamicStorageManager.getUserEmail(userOrEmail)));
+                    mail.To.Add(new MailAddress(this.dynamicStorageManager.GetUserEmail(userOrEmail)));
                 }
 
                 mail.Subject = "2FA-Calculator One Time Password";
-                this.otp = this.otpGenerator.generateOTP();
+                this.otp = this.otpGenerator.GenerateOTP();
                 mail.Body = "Your OTP: " + this.otp;
                 mail.IsBodyHtml = true;
 
@@ -54,7 +54,7 @@ namespace _2FA_Calculator.ServerSide
             return true;
         }
 
-        public bool authenticateOTP(string userInput)
+        public bool AuthenticateOTP(string userInput)
         {
             if (this.otp != null && userInput != null)
             {

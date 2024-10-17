@@ -4,7 +4,7 @@
     {
         public CalculatorClass() { }
 
-        public void interactWithCalculator()
+        public void InteractWithCalculator()
         {
             while (true)
             {
@@ -22,7 +22,7 @@
                             double? result;
                             Console.WriteLine("Enter your simple expression: ");
 
-                            if ((result = evaluateExpression(Console.ReadLine())) != null)
+                            if ((result = EvaluateExpression(Console.ReadLine())) != null)
                             {
                                 Console.WriteLine("Result = " + result.ToString() + "\n");
                             }
@@ -43,17 +43,17 @@
             }
         }
 
-        private double? evaluateExpression(string? expression)
+        private double? EvaluateExpression(string? expression)
         {
             // Assuuming the expression is 3 things:
             // 2 Integers and an operator
 
             if (expression != null)
             {
-                int int1 = getFirstIntInString(ref expression);
+                int int1 = GetFirstIntInString(ref expression);
                 char op = expression[0];
                 expression = expression.Substring(1);
-                int int2 = getFirstIntInString(ref expression);
+                int int2 = GetFirstIntInString(ref expression);
 
                 switch (op)
                 {
@@ -73,7 +73,7 @@
             return null;
         }
 
-        private int getFirstIntInString(ref string expression)
+        private int GetFirstIntInString(ref string expression)
         {
             int i = 0;
             string integer = string.Empty;

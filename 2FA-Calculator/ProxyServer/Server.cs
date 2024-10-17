@@ -14,7 +14,7 @@ namespace _2FA_Calculator.ProxyServer
         public Server()
         {
             this.persistentStorageManager = new PersistentStorageManager(userCredeintialsStorageFilePath);
-            Dictionary<string, Dictionary<string, string>>? tempDynaStorage = this.persistentStorageManager.populateDynamicStorage();
+            Dictionary<string, Dictionary<string, string>>? tempDynaStorage = this.persistentStorageManager.PopulateDynamicStorage();
             if (tempDynaStorage != null)
             {
                 this.dynamicStorageManager = new DynamicStorageManager(tempDynaStorage);
@@ -29,34 +29,34 @@ namespace _2FA_Calculator.ProxyServer
             this.email2FA = new Email2FA(this.dynamicStorageManager);
         }
 
-        public bool createAccount(string username, string password, string email)
+        public bool CreateAccount(string username, string password, string email)
         {
-            return this.dynamicStorageManager.createAccount(username, password, email);
+            return this.dynamicStorageManager.CreateAccount(username, password, email);
         }
 
-        public string authenticateUserAndPass(string username, string password)
+        public string AuthenticateUserAndPass(string username, string password)
         {
-            return this.userAuthenticator.authenticateUserAndPass(username, password);
+            return this.userAuthenticator.AuthenticateUserAndPass(username, password);
         }
 
-        public bool sendOTPEmail(string userOrEmail)
+        public bool SendOTPEmail(string userOrEmail)
         {
-            return this.email2FA.sendOTPEmail(userOrEmail);
+            return this.email2FA.SendOTPEmail(userOrEmail);
         }
 
-        public bool authenticateOTPEmail(string userInput)
+        public bool AuthenticateOTPEmail(string userInput)
         {
-            return this.email2FA.authenticateOTP(userInput);
+            return this.email2FA.AuthenticateOTP(userInput);
         }
 
-        public void updatePassword(string userOrEmail, string newPassword)
+        public void UpdatePassword(string userOrEmail, string newPassword)
         {
-            this.dynamicStorageManager.updatePassword(userOrEmail, newPassword);
+            this.dynamicStorageManager.UpdatePassword(userOrEmail, newPassword);
         }
 
-        public bool userExists(string username)
+        public bool UserExists(string username)
         {
-            return this.dynamicStorageManager.userExists(username);
+            return this.dynamicStorageManager.UserExists(username);
         }
     }
 }

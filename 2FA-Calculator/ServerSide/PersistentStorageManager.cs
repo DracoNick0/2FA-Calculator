@@ -12,7 +12,7 @@ namespace _2FA_Calculator.ServerSide
             this.storageFilePath = storageFilePath;
         }
 
-        public Dictionary<string, Dictionary<string, string>>? populateDynamicStorage()
+        public Dictionary<string, Dictionary<string, string>>? PopulateDynamicStorage()
         {
             Dictionary<string, Dictionary<string, string>> result
                 = new Dictionary<string, Dictionary<string, string>>();
@@ -45,7 +45,7 @@ namespace _2FA_Calculator.ServerSide
             return null;
         }
 
-        public bool populatePersistentStorage(Dictionary<string, Dictionary<string, string>> dynamicStorage)
+        public bool SaveToPersistentStorage(Dictionary<string, Dictionary<string, string>> dynamicStorage)
         {
             if (this.storageFilePath != null)
             {

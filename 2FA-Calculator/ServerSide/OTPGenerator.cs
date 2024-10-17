@@ -2,7 +2,7 @@
 {
     class OTPGenerator
     {
-        public string generateOTP()
+        public string GenerateOTP()
         {
             string OTP = string.Empty;
 

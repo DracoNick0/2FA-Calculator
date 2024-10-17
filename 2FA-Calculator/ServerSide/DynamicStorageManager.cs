@@ -15,13 +15,13 @@ namespace _2FA_Calculator.ServerSide
             this.hasher = new Hasher();
         }
 
-        public bool addAccount(string user, string hashedPassword, string salt, string email)
+        public bool AddAccount(string user, string hashedPassword, string salt, string email)
         {
             Dictionary<string, string> aUsersCredentials = new Dictionary<string, string>();
 
             // If list is not null and user does not yet exists
             // then add user and their credentials.
-            if (aUsersCredentials != null && !userExists(user))
+            if (aUsersCredentials != null && !this.UserExists(user))
             {
                 aUsersCredentials.Add("hashedPassword", hashedPassword);
                 aUsersCredentials.Add("salt", salt);
@@ -34,9 +34,9 @@ namespace _2FA_Calculator.ServerSide
             return false;
         }
 
-        public string getUserEmail(string user)
+        public string GetUserEmail(string user)
         {
-            if (userExists(user))
+            if (this.UserExists(user))
             {
                 return this.allUsersDeets[user]["email"];
             }
@@ -44,12 +44,12 @@ namespace _2FA_Calculator.ServerSide
             return string.Empty;
         }
 
-        public bool createAccount(string user, string password, string email)
+        public bool CreateAccount(string user, string password, string email)
         {
-            if (!userExists(user))
+            if (!this.UserExists(user))
             {
                 int saltLength = 8;
-                string salt = generateSalt(saltLength);
+                string salt = GenerateSalt(saltLength);
                 string hashedPassword = this.hasher.computeSha256Hash(password + salt);
 
                 if (this.allUsersDeets != null)
@@ -66,22 +66,22 @@ namespace _2FA_Calculator.ServerSide
             return false;
         }
 
-        public bool userExists(string user)
+        public bool UserExists(string user)
         {
             return this.allUsersDeets.ContainsKey(user);
         }
 
-        public bool updatePassword(string userOrEmail, string newPassword)
+        public bool UpdatePassword(string userOrEmail, string newPassword)
         {
             int saltLength = 8;
 
-            if (RandomFunctions.isValidEmail(userOrEmail))
+            if (RandomFunctions.IsValidEmail(userOrEmail))
             {
                 foreach(string user in  this.allUsersDeets.Keys)
                 {
                     if (userOrEmail.CompareTo(this.allUsersDeets[user]) == 0)
                     {
-                        this.allUsersDeets[user]["salt"] = this.generateSalt(saltLength);
+                        this.allUsersDeets[user]["salt"] = this.GenerateSalt(saltLength);
                         this.allUsersDeets[user]["hashedPassword"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[user]["salt"]);
                         return true;
                     }
@@ -91,7 +91,7 @@ namespace _2FA_Calculator.ServerSide
             {
                 if (this.allUsersDeets.ContainsKey(userOrEmail))
                 {
-                    this.allUsersDeets[userOrEmail]["salt"] = this.generateSalt(saltLength);
+                    this.allUsersDeets[userOrEmail]["salt"] = this.GenerateSalt(saltLength);
                     this.allUsersDeets[userOrEmail]["hashedPassword"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[userOrEmail]["salt"]);
                     return true;
                 }
@@ -100,12 +100,12 @@ namespace _2FA_Calculator.ServerSide
             return false;
         }
 
-        public Dictionary<string, string> getUserDetails(string user)
+        public Dictionary<string, string> GetUserDetails(string user)
         {
             return this.allUsersDeets[user];
         }
 
-        private string generateSalt(int length)
+        private string GenerateSalt(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();

@@ -9,10 +9,10 @@
         }
 
         // Add the ability to count incorrect attempts and return "Too many incorrect attempts!" ***********************
-        public string authenticateUserAndPass(string username, string password)
+        public string AuthenticateUserAndPass(string username, string password)
         {
             Hasher hasher = new Hasher();
-            Dictionary<string, string> userDeets = this.dynamicStorageManager.getUserDetails(username);
+            Dictionary<string, string> userDeets = this.dynamicStorageManager.GetUserDetails(username);
 
             string inputtedPasswordHashed = hasher.computeSha256Hash(password + userDeets["salt"]);
             if (inputtedPasswordHashed.CompareTo(userDeets["hashedPassword"]) == 0)

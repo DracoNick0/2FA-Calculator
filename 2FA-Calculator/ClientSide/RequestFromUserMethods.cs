@@ -2,7 +2,7 @@
 {
     class RequestFromUserMethods
     {
-        public string requestInput(string nameOfInput)
+        public string RequestInput(string nameOfInput)
         {
             string? userInput = null;
 
@@ -20,7 +20,7 @@
             return userInput;
         }
 
-        public string requestInputAndConf(string nameOfInput)
+        public string RequestInputAndConf(string nameOfInput)
         {
             bool userIsSatisfied = false;
             string? userInput = null;
@@ -38,13 +38,13 @@
                     }
                 }
 
-                userIsSatisfied = confirmIfInputIsCorrect(userInput);
+                userIsSatisfied = ConfirmIfInputIsCorrect(userInput);
             }
 
             return userInput;
         }
 
-        public bool confirmIfInputIsCorrect(string input)
+        public bool ConfirmIfInputIsCorrect(string input)
         {
             Console.WriteLine("Is \"" + input + "\" correct?");
             return confirm();

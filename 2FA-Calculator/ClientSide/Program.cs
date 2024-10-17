@@ -18,19 +18,19 @@ while (true)
         switch (userInput[0])
         {
             case '1':
-                if (userLogin.login())
+                if (userLogin.Login())
                 {
                     Console.Clear();
                     CalculatorClass calculator = new CalculatorClass();
                     Console.WriteLine("Welcome " + userLogin.Username() + "!\n");
-                    calculator.interactWithCalculator();
+                    calculator.InteractWithCalculator();
                 }
                 break;
             case '2':
-                userLogin.createAccount();
+                userLogin.CreateAccount();
                 break;
             case '3':
-                userLogin.forgotLogin();
+                userLogin.ForgotLogin();
                 break;
             case '4':
                 return 1;

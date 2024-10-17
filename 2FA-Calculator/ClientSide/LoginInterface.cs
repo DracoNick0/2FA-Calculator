@@ -24,16 +24,16 @@ namespace _2FA_Calculator.ClientSide
             return this.username;
         }
 
-        public bool login()
+        public bool Login()
         {
-            this.requestUserAndPass();
+            this.RequestUserAndPass();
 
-            if (this.authenticateUserAndPass() == "User verified!")
+            if (this.AuthenticateUserAndPass() == "User verified!")
             {
-                if (this.server.sendOTPEmail(this.username))
+                if (this.server.SendOTPEmail(this.username))
                 {
                     Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-                    if (this.server.authenticateOTPEmail(this.requester.requestInput("OTP")))
+                    if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
                     {
                         return true;
                     }
@@ -47,15 +47,15 @@ namespace _2FA_Calculator.ClientSide
             return false;
         }
 
-        public bool createAccount()
+        public bool CreateAccount()
         {
             string? userInput = string.Empty;
             bool userExists = true;
 
             while (userExists)
             {
-                this.username = this.requester.requestInputAndConf("username");
-                if (!this.server.userExists(this.username))
+                this.username = this.requester.RequestInputAndConf("username");
+                if (!this.server.UserExists(this.username))
                 {
                     userExists = false;
                 }
@@ -65,16 +65,16 @@ namespace _2FA_Calculator.ClientSide
                 }
             }
 
-            this.password = this.requester.requestInputAndConf("password");
+            this.password = this.requester.RequestInputAndConf("password");
 
             // Make the following code the servers responsibility for higher security **********************************************************************************************
-            this.server.sendOTPEmail(this.email = this.requester.requestInputAndConf("email"));
+            this.server.SendOTPEmail(this.email = this.requester.RequestInputAndConf("email"));
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
             Console.Write("Please input the otp: ");
             userInput = Console.ReadLine();
 
-            if (userInput == null || !this.server.authenticateOTPEmail(userInput))
+            if (userInput == null || !this.server.AuthenticateOTPEmail(userInput))
             {
                 Console.Clear();
                 Console.WriteLine("Account creation failed, otp was incorrect.");
@@ -83,35 +83,35 @@ namespace _2FA_Calculator.ClientSide
 
 
             // Go through server to create account
-            this.server.createAccount(this.username, this.password, this.email);
+            this.server.CreateAccount(this.username, this.password, this.email);
             Console.Clear();
             Console.WriteLine("Account creation successfull!");
             return true;
         }
 
         // Make this function more secure, by making the client side have to send a code to the server along side the new password, for the password to be saved. ********************************
-        public bool forgotLogin()
+        public bool ForgotLogin()
         {
             string? userOrEmail = string.Empty;
             string? userInput = string.Empty;
 
-            this.server.sendOTPEmail(userOrEmail = this.requester.requestInputAndConf("username or email"));
+            this.server.SendOTPEmail(userOrEmail = this.requester.RequestInputAndConf("username or email"));
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
             Console.Write("Please input the otp: ");
             userInput = Console.ReadLine();
 
-            if (userInput == null || !this.server.authenticateOTPEmail(userInput))
+            if (userInput == null || !this.server.AuthenticateOTPEmail(userInput))
             {
                 Console.WriteLine("User authentication failed, otp was incorrect.");
                 return false;
             }
 
-            this.server.updatePassword(userOrEmail, this.requester.requestInputAndConf("new password"));
+            this.server.UpdatePassword(userOrEmail, this.requester.RequestInputAndConf("new password"));
             return true;
         }
 
-        private void requestUserAndPass()
+        private void RequestUserAndPass()
         {
             Console.WriteLine("Input your \"username password\".");
 
@@ -128,14 +128,14 @@ namespace _2FA_Calculator.ClientSide
                 else
                 {
                     Console.WriteLine("\nIncorrect input, try again.");
-                    requestUserAndPass();
+                    RequestUserAndPass();
                 }
             }
         }
 
-        private string authenticateUserAndPass()
+        private string AuthenticateUserAndPass()
         {
-            return server.authenticateUserAndPass(this.username, this.password);
+            return server.AuthenticateUserAndPass(this.username, this.password);
         }
     }
 }
