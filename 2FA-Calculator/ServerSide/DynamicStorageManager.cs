@@ -14,25 +14,6 @@ namespace _2FA_Calculator.ServerSide
             this.hasher = new Hasher();
         }
 
-        public bool AddAccount(string user, string hashedPassword, string salt, string email)
-        {
-            Dictionary<string, string> aUsersCredentials = new Dictionary<string, string>();
-
-            // If list is not null and user does not yet exists
-            // then add user and their credentials.
-            if (aUsersCredentials != null && !this.UserExists(user))
-            {
-                aUsersCredentials.Add("hashedPassword", hashedPassword);
-                aUsersCredentials.Add("salt", salt);
-                aUsersCredentials.Add("email", email);
-                this.allUsersDeets.Add(user, aUsersCredentials);
-
-                return true;
-            }
-
-            return false;
-        }
-
         public string GetUserEmail(string user)
         {
             if (this.UserExists(user))
@@ -54,9 +35,10 @@ namespace _2FA_Calculator.ServerSide
                 if (this.allUsersDeets != null)
                 {
                     this.allUsersDeets[user] = new Dictionary<string, string>();
-                    this.allUsersDeets[user]["hashedPassword"] = hashedPassword;
+                    this.allUsersDeets[user]["hashed password"] = hashedPassword;
                     this.allUsersDeets[user]["salt"] = salt;
                     this.allUsersDeets[user]["email"] = email;
+                    this.allUsersDeets[user]["time when locked out"] = DateTime.MinValue.ToString();
                 }
 
                 return true;
@@ -81,7 +63,7 @@ namespace _2FA_Calculator.ServerSide
                     if (userOrEmail.CompareTo(this.allUsersDeets[user]) == 0)
                     {
                         this.allUsersDeets[user]["salt"] = this.GenerateSalt(saltLength);
-                        this.allUsersDeets[user]["hashedPassword"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[user]["salt"]);
+                        this.allUsersDeets[user]["hashed password"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[user]["salt"]);
                         return true;
                     }
                 }
@@ -91,7 +73,7 @@ namespace _2FA_Calculator.ServerSide
                 if (this.allUsersDeets.ContainsKey(userOrEmail))
                 {
                     this.allUsersDeets[userOrEmail]["salt"] = this.GenerateSalt(saltLength);
-                    this.allUsersDeets[userOrEmail]["hashedPassword"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[userOrEmail]["salt"]);
+                    this.allUsersDeets[userOrEmail]["hashed password"] = this.hasher.computeSha256Hash(newPassword + this.allUsersDeets[userOrEmail]["salt"]);
                     return true;
                 }
             }
