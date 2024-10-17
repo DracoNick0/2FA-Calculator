@@ -27,8 +27,9 @@ namespace _2FA_Calculator.ClientSide
         public bool Login()
         {
             this.RequestUserAndPass();
+            string authMessage = string.Empty;
 
-            if (this.AuthenticateUserAndPass() == "User verified!")
+            if ((authMessage = this.AuthenticateUserAndPass()).CompareTo("User verified!") == 0)
             {
                 if (this.server.SendOTPEmail(this.username))
                 {
@@ -39,10 +40,24 @@ namespace _2FA_Calculator.ClientSide
                     }
                 }
             }
-            
-            Console.WriteLine("Username input: " + this.username);
-            Console.WriteLine("Password input: " + this.password);
-            Console.WriteLine("Incorrect username and/or password! ;n;\n");
+            else if (authMessage.CompareTo("Incorrect credentials!") == 0)
+            {
+                Console.WriteLine("Username input: " + this.username);
+                Console.WriteLine("Password input: " + this.password);
+                Console.WriteLine("Incorrect username and/or password! ;n;\n");
+                Console.WriteLine("This account is locked for 3 minutes!");
+            }
+            else if (authMessage.CompareTo("Incorrect credentials!") == 0)
+            {
+                Console.WriteLine("Username input: " + this.username);
+                Console.WriteLine("Password input: " + this.password);
+                Console.WriteLine("Incorrect username and/or password! ;n;\n");
+                Console.WriteLine("This account is locked for 3 minutes!");
+            }
+            else
+            {
+                Console.WriteLine(authMessage);
+            }
 
             return false;
         }

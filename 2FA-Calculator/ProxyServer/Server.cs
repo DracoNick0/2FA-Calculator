@@ -36,7 +36,16 @@ namespace _2FA_Calculator.ProxyServer
 
         public string AuthenticateUserAndPass(string username, string password)
         {
-            return this.userAuthenticator.AuthenticateUserAndPass(username, password);
+            string authMessage = this.userAuthenticator.AuthenticateUserAndPass(username, password);
+
+            // If account gets locked, save this.
+            if (authMessage.CompareTo("Incorrect credentials!") == 0)
+            {
+                this.SaveAllUsersCredentials();
+                return "Incorrect credentials!";
+            }
+
+            return authMessage;
         }
 
         public bool SendOTPEmail(string userOrEmail)
