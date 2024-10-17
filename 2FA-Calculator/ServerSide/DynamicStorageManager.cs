@@ -71,6 +71,11 @@ namespace _2FA_Calculator.ServerSide
             return this.everyUsersDetails.ContainsKey(username);
         }
 
+        public bool updatePassword(string userOrEmail, string newPassword)
+        {
+
+        }
+
         private string generateSalt(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

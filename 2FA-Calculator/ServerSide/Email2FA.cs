@@ -6,15 +6,15 @@ namespace _2FA_Calculator.ServerSide
     class Email2FA
     {
         OTPGenerator otpGenerator;
-        PersistentStorageManager userManager;
+        DynamicStorageManager dynamicStorageManager;
         private const string senderEmail = "ntstemporary7@gmail.com";
         private const string senderGoogleAppPassword = "qqud szzc jzdn mmai";
         private string? otp;
 
-        public Email2FA()
+        public Email2FA(DynamicStorageManager dynamicStorageManager)
         {
             this.otpGenerator = new OTPGenerator();
-            this.userManager = new PersistentStorageManager(@"../../../ServerSide/UserCredentialsStorage.txt");
+            this.dynamicStorageManager = dynamicStorageManager;
             this.otp = null;
         }
 
@@ -33,7 +33,7 @@ namespace _2FA_Calculator.ServerSide
                 }
                 else
                 {
-                    mail.To.Add(new MailAddress(this.userManager.getUserEmail(userOrEmail)));
+                    mail.To.Add(new MailAddress(this.dynamicStorageManager.getUserEmail(userOrEmail)));
                 }
 
                 mail.Subject = "2FA-Calculator One Time Password";
