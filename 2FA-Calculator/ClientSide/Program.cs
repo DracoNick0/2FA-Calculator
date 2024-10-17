@@ -33,6 +33,7 @@ while (true)
                 userLogin.ForgotLogin();
                 break;
             case '4':
+                userLogin.SaveAllUsersCredentials();
                 return 1;
         }
     }

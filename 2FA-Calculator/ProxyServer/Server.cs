@@ -58,5 +58,10 @@ namespace _2FA_Calculator.ProxyServer
         {
             return this.dynamicStorageManager.UserExists(username);
         }
+
+        public bool SaveAllUsersCredentials()
+        {
+            return this.persistentStorageManager.SaveAllUsersCredentials();
+        }
     }
 }

@@ -135,7 +135,12 @@ namespace _2FA_Calculator.ClientSide
 
         private string AuthenticateUserAndPass()
         {
-            return server.AuthenticateUserAndPass(this.username, this.password);
+            return this.server.AuthenticateUserAndPass(this.username, this.password);
+        }
+
+        public bool SaveAllUsersCredentials()
+        {
+            return this.server.SaveAllUsersCredentials();
         }
     }
 }

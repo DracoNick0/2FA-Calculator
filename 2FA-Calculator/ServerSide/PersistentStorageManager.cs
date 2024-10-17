@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace _2FA_Calculator.ServerSide
+﻿namespace _2FA_Calculator.ServerSide
 {
     class PersistentStorageManager
     {
         private string storageFilePath;
+        Dictionary<string, Dictionary<string, string>>? dynamicStorage;
 
         public PersistentStorageManager(string storageFilePath)
         {
             this.storageFilePath = storageFilePath;
+            this.dynamicStorage = PopulateDynamicStorage();
         }
 
         public Dictionary<string, Dictionary<string, string>>? PopulateDynamicStorage()
@@ -38,20 +37,21 @@ namespace _2FA_Calculator.ServerSide
                     }
                 }
 
+                this.dynamicStorage = result;
                 return result;
-                
             }
 
+            // Throw an exception *************************************************************************************************
             return null;
         }
 
-        public bool SaveToPersistentStorage(Dictionary<string, Dictionary<string, string>> dynamicStorage)
+        public bool SaveAllUsersCredentials()
         {
-            if (this.storageFilePath != null)
+            if (this.storageFilePath != null && this.dynamicStorage != null)
             {
                 using (StreamWriter sw = new StreamWriter(storageFilePath))
                 {
-                    foreach (string user in dynamicStorage.Keys)
+                    foreach (string user in this.dynamicStorage.Keys)
                     {
                         sw.WriteLine(user + ","
                             + dynamicStorage[user]["hashedPassword"] + ","
