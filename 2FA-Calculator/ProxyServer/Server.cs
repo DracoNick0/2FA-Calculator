@@ -5,8 +5,8 @@ namespace _2FA_Calculator.ProxyServer
     class Server
     {
         private static string userCredeintialsStorageFilePath = @"../../../ServerSide/UserCredentialsStorage.txt";
-        private PersistentStorageManager persistentStorageManager;
         private DynamicStorageManager dynamicStorageManager;
+        private PersistentStorageManager persistentStorageManager;
         private UserAuthenticator userAuthenticator;
         private PersistentStorageManager userManager;
         private Email2FA email2FA;
@@ -49,9 +49,9 @@ namespace _2FA_Calculator.ProxyServer
             return this.email2FA.AuthenticateOTP(userInput);
         }
 
-        public void UpdatePassword(string userOrEmail, string newPassword)
+        public bool UpdatePassword(string userOrEmail, string newPassword)
         {
-            this.dynamicStorageManager.UpdatePassword(userOrEmail, newPassword);
+            return this.dynamicStorageManager.UpdatePassword(userOrEmail, newPassword);
         }
 
         public bool UserExists(string username)

@@ -33,6 +33,9 @@ while (true)
                 userLogin.ForgotLogin();
                 break;
             case '4':
+                // This does not give the client access to user credentials.
+                // It simply tells the server to save all credentials it has.
+                // Basically saving new users or edited user credentials.
                 userLogin.SaveAllUsersCredentials();
                 return 1;
         }
