@@ -31,7 +31,9 @@ namespace _2FA_Calculator.ProxyServer
 
         public bool CreateAccount(string username, string password, string email)
         {
-            return this.dynamicStorageManager.CreateAccount(username, password, email);
+            bool returnValue =  this.dynamicStorageManager.CreateAccount(username, password, email);
+            this.SaveAllUsersCredentials();
+            return returnValue;
         }
 
         public string AuthenticateUserAndPass(string username, string password)
@@ -60,7 +62,9 @@ namespace _2FA_Calculator.ProxyServer
 
         public bool UpdatePassword(string userOrEmail, string newPassword)
         {
-            return this.dynamicStorageManager.UpdatePassword(userOrEmail, newPassword);
+            bool returnValue = this.dynamicStorageManager.UpdatePassword(userOrEmail, newPassword);
+            this.SaveAllUsersCredentials();
+            return returnValue;
         }
 
         public bool UserExists(string username)
