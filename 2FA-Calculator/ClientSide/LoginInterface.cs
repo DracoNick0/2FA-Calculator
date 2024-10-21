@@ -42,17 +42,11 @@ namespace _2FA_Calculator.ClientSide
             }
             else if (authMessage.CompareTo("Incorrect credentials!") == 0)
             {
+                Console.Clear();
+                Console.WriteLine("Incorrect username and/or password! ;n;");
                 Console.WriteLine("Username input: " + this.username);
                 Console.WriteLine("Password input: " + this.password);
-                Console.WriteLine("Incorrect username and/or password! ;n;\n");
-                Console.WriteLine("This account is locked for 3 minutes!");
-            }
-            else if (authMessage.CompareTo("Incorrect credentials!") == 0)
-            {
-                Console.WriteLine("Username input: " + this.username);
-                Console.WriteLine("Password input: " + this.password);
-                Console.WriteLine("Incorrect username and/or password! ;n;\n");
-                Console.WriteLine("This account is locked for 3 minutes!");
+                Console.WriteLine("This account is locked for 3 minutes!\n");
             }
             else
             {
@@ -76,14 +70,19 @@ namespace _2FA_Calculator.ClientSide
                 }
                 else
                 {
+                    Console.Clear();
                     Console.WriteLine("Username already exists, try another.");
                 }
             }
 
+            Console.Clear();
             this.password = this.requester.RequestInputAndConf("password");
 
             // Make the following code the servers responsibility for higher security **********************************************************************************************
+            Console.Clear();
             this.server.SendOTPEmail(this.email = this.requester.RequestInputAndConf("email"));
+            
+            Console.Clear();
             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
 
             Console.Write("Please input the otp: ");
@@ -92,7 +91,7 @@ namespace _2FA_Calculator.ClientSide
             if (userInput == null || !this.server.AuthenticateOTPEmail(userInput))
             {
                 Console.Clear();
-                Console.WriteLine("Account creation failed, otp was incorrect.");
+                Console.WriteLine("Account creation failed, otp was incorrect.\n");
                 return false;
             }
 
@@ -100,7 +99,7 @@ namespace _2FA_Calculator.ClientSide
             // Go through server to create account
             this.server.CreateAccount(this.username, this.password, this.email);
             Console.Clear();
-            Console.WriteLine("Account creation successfull!");
+            Console.WriteLine("Account creation successfull!\n");
             return true;
         }
 
@@ -118,7 +117,7 @@ namespace _2FA_Calculator.ClientSide
 
             if (userInput == null || !this.server.AuthenticateOTPEmail(userInput))
             {
-                Console.WriteLine("User authentication failed, otp was incorrect.");
+                Console.WriteLine("User authentication failed, otp was incorrect.\n");
                 return false;
             }
 

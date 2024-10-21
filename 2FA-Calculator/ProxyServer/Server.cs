@@ -8,7 +8,6 @@ namespace _2FA_Calculator.ProxyServer
         private DynamicStorageManager dynamicStorageManager;
         private PersistentStorageManager persistentStorageManager;
         private UserAuthenticator userAuthenticator;
-        private PersistentStorageManager userManager;
         private Email2FA email2FA;
 
         public Server()
@@ -25,7 +24,6 @@ namespace _2FA_Calculator.ProxyServer
             }
 
             this.userAuthenticator = new UserAuthenticator(this.dynamicStorageManager);
-            this.userManager = new PersistentStorageManager(userCredeintialsStorageFilePath);
             this.email2FA = new Email2FA(this.dynamicStorageManager);
         }
 
@@ -38,13 +36,21 @@ namespace _2FA_Calculator.ProxyServer
 
         public string AuthenticateUserAndPass(string username, string password)
         {
-            string authMessage = this.userAuthenticator.AuthenticateUserAndPass(username, password);
+            string authMessage = string.Empty;
 
-            // If account gets locked, save this.
-            if (authMessage.CompareTo("Incorrect credentials!") == 0)
+            if (this.UserExists(username))
             {
-                this.SaveAllUsersCredentials();
-                return "Incorrect credentials!";
+                authMessage = this.userAuthenticator.AuthenticateUserAndPass(username, password);
+
+                // If account gets locked, save this.
+                if (authMessage.CompareTo("Incorrect credentials!") == 0)
+                {
+                    this.SaveAllUsersCredentials();
+                }
+            }
+            else
+            {
+                authMessage = "Incorrect credentials!";
             }
 
             return authMessage;

@@ -18,6 +18,7 @@ while (true)
         switch (userInput[0])
         {
             case '1':
+                Console.Clear();
                 if (userLogin.Login())
                 {
                     Console.Clear();
@@ -27,17 +28,24 @@ while (true)
                 }
                 break;
             case '2':
+                Console.Clear();
                 userLogin.CreateAccount();
                 break;
             case '3':
+                Console.Clear();
                 userLogin.ForgotLogin();
                 break;
             case '4':
                 // This does not give the client access to user credentials.
                 // It simply tells the server to save all credentials it has.
                 // Basically saving new users or edited user credentials.
+                Console.Clear();
                 userLogin.SaveAllUsersCredentials();
                 return 1;
+            default:
+                Console.Clear();
+                Console.WriteLine("Not a valid input, try again.\n");
+                break;
         }
     }
 }
