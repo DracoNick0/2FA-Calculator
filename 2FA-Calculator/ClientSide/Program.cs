@@ -2,8 +2,6 @@
 
 LoginInterface userLogin = new LoginInterface();
 
-GoogleAuthenticator.AuthenticateUser();
-
 string? userInput = null;
 while (true)
 {

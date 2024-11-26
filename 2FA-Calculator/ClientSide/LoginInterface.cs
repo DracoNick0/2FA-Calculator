@@ -1,4 +1,5 @@
 ﻿using _2FA_Calculator.ProxyServer;
+using Google.Apis.Http;
 
 namespace _2FA_Calculator.ClientSide
 {
@@ -27,16 +28,39 @@ namespace _2FA_Calculator.ClientSide
         public bool Login()
         {
             this.RequestUserAndPass();
-            string authMessage = string.Empty;
 
+            string authMessage = string.Empty;
             if ((authMessage = this.AuthenticateUserAndPass()).CompareTo("User verified!") == 0)
             {
-                if (this.server.SendOTPEmail(this.username))
+                string? userInput = null;
+                while (true)
                 {
-                    Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-                    if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
+                    Console.Clear();
+                    Console.WriteLine("What would you like to login with?");
+                    Console.WriteLine("[G] Google | [E] Email");
+
+                    while (userInput == null)
                     {
-                        return true;
+                        userInput = Console.ReadLine();
+                    }
+
+                    userInput.ToLower();
+
+                    switch (userInput)
+                    {
+                        case "g":
+                            GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
+                            return true;
+                        case "e":
+                            if (this.server.SendOTPEmail(this.username))
+                            {
+                                Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+                                if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
                     }
                 }
             }
