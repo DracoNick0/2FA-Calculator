@@ -11,12 +11,19 @@ namespace _2FA_Calculator.ClientSide
         // Return username
         public static string AuthenticateUser()
         {
+            string credentialsStoragePath = "savedUserTokens.json";
+
+            // Clear stored credentials
+            if (System.IO.Directory.Exists(credentialsStoragePath))
+            {
+                System.IO.Directory.Delete(credentialsStoragePath, true);
+            }
+
             UserCredential userCredential;
 
-            // Load or request credentials through OAuth 2.0
+            // Request credentials through OAuth 2.0
             using (var stream = new System.IO.FileStream("client_secrets.json", System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
-                string credentialsStoragePath = "savedUserTokens.json";
 
                 userCredential = GoogleWebAuthorizationBroker.AuthorizeAsync
                 (
@@ -40,6 +47,12 @@ namespace _2FA_Calculator.ClientSide
             peopleRequest.PersonFields = "names";
             Person userProfile = peopleRequest.Execute();
             string username = userProfile.Names?[0]?.DisplayName;
+
+            // Clear stored credentials
+            if (System.IO.Directory.Exists(credentialsStoragePath))
+            {
+                System.IO.Directory.Delete(credentialsStoragePath, true);
+            }
 
             return username;
         }
