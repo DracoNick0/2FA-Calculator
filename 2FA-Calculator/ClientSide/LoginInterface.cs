@@ -31,36 +31,13 @@ namespace _2FA_Calculator.ClientSide
             string authMessage = string.Empty;
             if ((authMessage = this.AuthenticateUserAndPass()).CompareTo("User verified!") == 0)
             {
-                string? userInput = null;
-                while (true)
+                if (TwoFactorAuthOptions() == string.Empty) // Use the value returned!**********************************************
                 {
-                    Console.Clear();
-                    Console.WriteLine("What would you like to login with?");
-                    Console.WriteLine("[G] Google | [E] Email");
-
-                    while (userInput == null)
-                    {
-                        userInput = Console.ReadLine();
-                    }
-
-                    userInput.ToLower();
-
-                    switch (userInput)
-                    {
-                        case "g":
-                            GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
-                            return true;
-                        case "e":
-                            if (this.server.SendOTPEmail(this.username))
-                            {
-                                Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-                                if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
-                                {
-                                    return true;
-                                }
-                            }
-                            return false;
-                    }
+                    return false;
+                }
+                else
+                {
+                    return true;
                 }
             }
             else if (authMessage.CompareTo("Incorrect credentials!") == 0)
@@ -77,6 +54,40 @@ namespace _2FA_Calculator.ClientSide
             }
 
             return false;
+        }
+
+        public string TwoFactorAuthOptions()
+        {
+            string? userInput = null;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("What would you like to login with?");
+                Console.WriteLine("[G] Google | [E] Email");
+
+                while (userInput == null)
+                {
+                    userInput = Console.ReadLine();
+                }
+
+                userInput.ToLower();
+
+                switch (userInput)
+                {
+                    case "g":
+                        return GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
+                    case "e":
+                        if (this.server.SendOTPEmail(this.username))
+                        {
+                            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+                            if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
+                            {
+                                return this.email;
+                            }
+                        }
+                        return string.Empty;
+                }
+            }
         }
 
         public bool CreateAccount()
@@ -101,36 +112,13 @@ namespace _2FA_Calculator.ClientSide
             Console.Clear();
             this.password = this.requester.RequestInputAndConf("password");
 
-            while (true)
+            if (TwoFactorAuthOptions() == string.Empty) // Use the value returned!**********************************************
             {
-                Console.Clear();
-                Console.WriteLine("Which 2FA option would you like to use?");
-                Console.WriteLine("[G] Google | [E] Email");
-
-                userInput = string.Empty;
-                while (userInput == string.Empty)
-                {
-                    userInput = Console.ReadLine();
-                }
-
-                userInput.ToLower();
-
-                switch (userInput)
-                {
-                    case "g":
-                        GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
-                        return true;
-                    case "e":
-                        if (this.server.SendOTPEmail(this.username))
-                        {
-                            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-                            if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
-                            {
-                                return true;
-                            }
-                        }
-                        return false;
-                }
+                return false;
+            }
+            else
+            {
+                return true;
             }
 
 
