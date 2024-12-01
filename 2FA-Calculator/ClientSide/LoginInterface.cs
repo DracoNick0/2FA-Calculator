@@ -1,5 +1,4 @@
 ﻿using _2FA_Calculator.ProxyServer;
-using Google.Apis.Http;
 
 namespace _2FA_Calculator.ClientSide
 {
@@ -102,7 +101,40 @@ namespace _2FA_Calculator.ClientSide
             Console.Clear();
             this.password = this.requester.RequestInputAndConf("password");
 
-            // Make the following code the servers responsibility for higher security **********************************************************************************************
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Which 2FA option would you like to use?");
+                Console.WriteLine("[G] Google | [E] Email");
+
+                userInput = string.Empty;
+                while (userInput == string.Empty)
+                {
+                    userInput = Console.ReadLine();
+                }
+
+                userInput.ToLower();
+
+                switch (userInput)
+                {
+                    case "g":
+                        GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
+                        return true;
+                    case "e":
+                        if (this.server.SendOTPEmail(this.username))
+                        {
+                            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+                            if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
+                }
+            }
+
+
+
             Console.Clear();
             this.server.SendOTPEmail(this.email = this.requester.RequestInputAndConf("email"));
             

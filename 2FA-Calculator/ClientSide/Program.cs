@@ -14,14 +14,14 @@ while (true)
     userInput = Console.ReadLine();
     if (userInput != null)
     {
-
         switch (userInput[0])
         {
             case '1':
                 Console.Clear();
-                if (userLogin.Login())
+                if (userLogin.Login()) // Ask users for credentials to access calculator.
                 {
                     Console.Clear();
+
                     CalculatorClass calculator = new CalculatorClass();
                     Console.WriteLine("Welcome " + userLogin.Username() + "!\n");
                     calculator.InteractWithCalculator();
@@ -36,11 +36,8 @@ while (true)
                 userLogin.ForgotLogin();
                 break;
             case '4':
-                // This does not give the client access to user credentials.
-                // It simply tells the server to save all credentials it has.
-                // Basically saving new users or edited user credentials.
                 Console.Clear();
-                userLogin.SaveAllUsersCredentials();
+                userLogin.SaveAllUsersCredentials(); // Tell the server to save all credentials.
                 return 1;
             default:
                 Console.Clear();
