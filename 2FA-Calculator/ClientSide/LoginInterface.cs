@@ -65,6 +65,7 @@ namespace _2FA_Calculator.ClientSide
                 Console.WriteLine("What would you like to login with?");
                 Console.WriteLine("[G] Google | [E] Email");
 
+                userInput = Console.ReadLine();
                 while (userInput == null)
                 {
                     userInput = Console.ReadLine();

@@ -50,7 +50,7 @@ namespace _2FA_Calculator.ProxyServer
             }
             else
             {
-                authMessage = "Incorrect credentials!";
+                authMessage = "User doesn't exist!";
             }
 
             return authMessage;
