@@ -59,20 +59,22 @@
 
                 if (input != null)
                 {
+                    input = input.ToLower();
+
                     if (input.Length == 1)
                     {
-                        if (input.CompareTo("y") == 0 || input.CompareTo("Y") == 0)
+                        if (input.CompareTo("y") == 0 || input.CompareTo("yes") == 0)
                         {
                             return true;
                         }
-                        else if (input.CompareTo("n") == 0 || input.CompareTo("N") == 0)
+                        else if (input.CompareTo("n") == 0 || input.CompareTo("no") == 0)
                         {
                             return false;
                         }
                     }
                 }
 
-                Console.Write("Please enter y or n: ");
+                Console.Write("Please enter yes(y) or no(n): ");
             }
         }
     }
