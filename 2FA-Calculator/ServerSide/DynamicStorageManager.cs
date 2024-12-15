@@ -14,17 +14,29 @@ namespace _2FA_Calculator.ServerSide
             this.hasher = new Hasher();
         }
 
+        public string GetUserAuthMethod(string username)
+        {
+            if (RandomFunctions.IsValidEmail(this.allUsersDeets[username]["auth"]))
+            {
+                return "email";
+            }
+            else
+            {
+                return "google";
+            }
+        }
+
         public string GetUserEmail(string user)
         {
             if (this.UserExists(user))
             {
-                return this.allUsersDeets[user]["email"];
+                return this.allUsersDeets[user]["auth"];
             }
 
             return string.Empty;
         }
 
-        public bool CreateAccount(string user, string password, string email)
+        public bool CreateAccount(string user, string password, string authMethod)
         {
             if (!this.UserExists(user))
             {
@@ -37,7 +49,7 @@ namespace _2FA_Calculator.ServerSide
                     this.allUsersDeets[user] = new Dictionary<string, string>();
                     this.allUsersDeets[user]["hashed password"] = hashedPassword;
                     this.allUsersDeets[user]["salt"] = salt;
-                    this.allUsersDeets[user]["email"] = email;
+                    this.allUsersDeets[user]["auth"] = authMethod;
                     this.allUsersDeets[user]["time when locked out"] = DateTime.MinValue.ToString();
                 }
 

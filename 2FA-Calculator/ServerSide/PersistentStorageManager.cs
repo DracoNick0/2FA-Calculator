@@ -32,7 +32,7 @@
                             result[tokens[0]] = newDict;
                             result[tokens[0]].Add("hashed password", tokens[1]);
                             result[tokens[0]].Add("salt", tokens[2]);
-                            result[tokens[0]].Add("email", tokens[3]);
+                            result[tokens[0]].Add("auth", tokens[3]);
                             result[tokens[0]].Add("time when locked out", tokens[4]);
                         }
                     }
@@ -57,7 +57,7 @@
                         sw.WriteLine(user + ","
                             + dynamicStorage[user]["hashed password"] + ","
                             + dynamicStorage[user]["salt"] + ","
-                            + dynamicStorage[user]["email"] + ","
+                            + dynamicStorage[user]["auth"] + ","
                             + dynamicStorage[user]["time when locked out"]);
                     }
 

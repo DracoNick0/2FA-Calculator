@@ -37,5 +37,18 @@
                 return (minutesTillFree + " minutes " + secondsTillFree + " seconds until account is no longer locked!");
             }
         }
+
+        public bool AuthenticateGoogleUsername(string username, string gUsername)
+        {
+            Dictionary<string, string> userDeets = this.dynamicStorageManager.GetUserDetails(username);
+            if (gUsername.CompareTo(userDeets["auth"]) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

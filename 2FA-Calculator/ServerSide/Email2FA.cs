@@ -8,7 +8,6 @@ namespace _2FA_Calculator.ServerSide
         OTPGenerator otpGenerator;
         DynamicStorageManager dynamicStorageManager;
         private const string senderEmail = "ntstemporary7@gmail.com";
-        private const string senderGoogleAppPassword = "qqud szzc jzdn mmai";
         private string? otp;
 
         public Email2FA(DynamicStorageManager dynamicStorageManager)

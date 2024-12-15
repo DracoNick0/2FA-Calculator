@@ -31,13 +31,22 @@ namespace _2FA_Calculator.ClientSide
             string authMessage = string.Empty;
             if ((authMessage = this.AuthenticateUserAndPass()).CompareTo("User verified!") == 0)
             {
-                if (TwoFactorAuthOptions() == string.Empty) // Use the value returned!**********************************************
+                string authMethod;
+                if ((authMethod = this.server.GetUserAuthMethod(this.username)) == "email")
                 {
+                    if (this.server.SendOTPEmail(this.username))
+                    {
+                        Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
+                        if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
+                        {
+                            return true;
+                        }
+                    }
                     return false;
                 }
-                else
+                else if (authMethod == "google")
                 {
-                    return true;
+                    return this.server.AuthenticateGoogleUsername(username, GoogleAuthenticator.AuthenticateUser());
                 }
             }
             else if (authMessage.CompareTo("Incorrect credentials!") == 0)
@@ -76,9 +85,10 @@ namespace _2FA_Calculator.ClientSide
                 switch (userInput)
                 {
                     case "g":
-                        return GoogleAuthenticator.AuthenticateUser(); // Need to verify that this is the user!!!**********************************************************
+                        return GoogleAuthenticator.AuthenticateUser();
                     case "e":
-                        if (this.server.SendOTPEmail(this.username))
+                        this.email = this.requester.RequestInput("email");
+                        if (this.server.SendOTPEmail(this.email))
                         {
                             Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
                             if (this.server.AuthenticateOTPEmail(this.requester.RequestInput("OTP")))
@@ -113,39 +123,22 @@ namespace _2FA_Calculator.ClientSide
             Console.Clear();
             this.password = this.requester.RequestInputAndConf("password");
 
-            if (TwoFactorAuthOptions() == string.Empty) // Use the value returned!**********************************************
+
+            string authMethod; // This variable either holds users email or google username, either will be used for authentication in the future
+            if ((authMethod = TwoFactorAuthOptions()) == string.Empty)
             {
+                Console.Clear();
+                Console.WriteLine("Account creation failed try again!\n");
                 return false;
             }
             else
             {
+                // Go through server to create account, save the account with the users email or google username.
+                this.server.CreateAccount(this.username, this.password, authMethod);
+                Console.Clear();
+                Console.WriteLine("Account creation successfull!\n");
                 return true;
             }
-
-
-
-            Console.Clear();
-            this.server.SendOTPEmail(this.email = this.requester.RequestInputAndConf("email"));
-            
-            Console.Clear();
-            Console.WriteLine("We sent an email to " + this.email + ". Mail may be in junk.");
-
-            Console.Write("Please input the otp: ");
-            userInput = Console.ReadLine();
-
-            if (userInput == null || !this.server.AuthenticateOTPEmail(userInput))
-            {
-                Console.Clear();
-                Console.WriteLine("Account creation failed, otp was incorrect.\n");
-                return false;
-            }
-
-
-            // Go through server to create account
-            this.server.CreateAccount(this.username, this.password, this.email);
-            Console.Clear();
-            Console.WriteLine("Account creation successfull!\n");
-            return true;
         }
 
         // Make this function more secure, by making the client side have to send a code to the server along side the new password, for the password to be saved. ********************************

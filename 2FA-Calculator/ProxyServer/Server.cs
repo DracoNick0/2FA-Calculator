@@ -82,5 +82,15 @@ namespace _2FA_Calculator.ProxyServer
         {
             return this.persistentStorageManager.SaveAllUsersCredentials();
         }
+
+        public string GetUserAuthMethod(string username)
+        {
+            return this.dynamicStorageManager.GetUserAuthMethod(username);
+        }
+
+        public bool AuthenticateGoogleUsername(string username, string gUsername)
+        {
+            return this.userAuthenticator.AuthenticateGoogleUsername(username, gUsername);
+        }
     }
 }
